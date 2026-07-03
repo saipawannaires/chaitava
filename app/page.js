@@ -378,7 +378,7 @@ function ExploreSection() {
     <section className="py-24 px-6 relative">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
-          <Badge className="bg-purple-500/20 border-purple-300/30 text-purple-100 uppercase tracking-[0.25em] text-[10px]">Explore Sanatana</Badge>
+          <Badge className="bg-purple-500/20 border-purple-300/30 text-purple-100 uppercase tracking-[0.25em] text-[10px]">Explore Turiya</Badge>
           <h2 className="font-[Cormorant_Garamond,serif] text-4xl md:text-6xl mt-4 text-white">Choose your doorway.</h2>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -510,7 +510,8 @@ function App() {
 
       {/* Footer */}
       <footer className="py-10 px-6 border-t border-white/5 text-center text-slate-500 text-sm">
-        <div className="font-[Cormorant_Garamond,serif] text-2xl text-white/70 mb-2">Sanatana</div>
+          <div className="font-[Cormorant_Garamond,serif] text-2xl tracking-wide text-white/70 mb-2">Turiya</div>
+        <div className="text-slate-500 text-xs mb-2 italic">तुरीय · The fourth state of consciousness</div>
         <div>Balanced perspectives on the questions that matter most. AI-assisted, human-curated.</div>
       </footer>
     </div>

@@ -28,7 +28,7 @@ export default function SiteNav() {
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
         <Link href="/" className="flex items-center gap-2 shrink-0">
           <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 via-fuchsia-500 to-amber-400 flex items-center justify-center"><Sparkles size={16} className="text-white"/></div>
-          <div className="font-[Cormorant_Garamond,serif] text-2xl tracking-wide text-white">Sanatana</div>
+          <div className="font-[Cormorant_Garamond,serif] text-2xl tracking-wide text-white">Turiya</div>
         </Link>
         <div className="hidden lg:flex gap-5 text-sm text-slate-300 overflow-x-auto">
           {LINKS.map((l) => (
