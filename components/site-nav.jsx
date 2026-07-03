@@ -4,6 +4,7 @@ import { Sparkles, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const LINKS = [
+  { href: '/awakening', label: 'Awakening' },
   { href: '/questions', label: 'Questions' },
   { href: '/coach', label: 'Coach' },
   { href: '/practices', label: 'Practices' },
@@ -18,8 +19,7 @@ const LINKS = [
   { href: '/timeline', label: 'Cosmos' },
   { href: '/books', label: 'Books' },
   { href: '/music', label: 'Music' },
-  { href: '/journal', label: 'Journal' },
-  { href: '/community', label: 'Community' },
+  { href: '/community', label: 'Sangha' },
 ];
 
 export default function SiteNav() {

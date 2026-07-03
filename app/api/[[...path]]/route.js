@@ -6,10 +6,11 @@ import { LIFE_QUESTIONS, WORLD_TEMPLES, SACRED_MUSIC } from '@/lib/content-extra
 import { ANCIENT_KNOWLEDGE, LEARNING_PATHS, DAILY_PRACTICES, CHALLENGES, MYSTERIES } from '@/lib/content-more';
 import { MORE_LIFE_QUESTIONS, MORE_TEMPLES, MORE_BOOKS, MORE_MEDITATIONS } from '@/lib/content-expand';
 import { COACH_DOMAINS, YAJNA, UNIVERSE_SCALES } from '@/lib/content-final';
+import { CHAKRA_OPENING, VEDIC_BODY_COSMOS, MORE_TEMPLES_V2 } from '@/lib/content-v2';
 
 // Merge expansions
 const ALL_QUESTIONS = [...LIFE_QUESTIONS, ...MORE_LIFE_QUESTIONS];
-const ALL_TEMPLES = [...WORLD_TEMPLES, ...MORE_TEMPLES];
+const ALL_TEMPLES = [...WORLD_TEMPLES, ...MORE_TEMPLES, ...MORE_TEMPLES_V2];
 const ALL_BOOKS = [...SACRED_BOOKS, ...MORE_BOOKS];
 const ALL_MEDITATIONS = [...MEDITATIONS, ...MORE_MEDITATIONS];
 
@@ -134,6 +135,8 @@ async function handler(request, context) {
     if (method === 'GET' && path === 'coach-domains') return NextResponse.json({ domains: COACH_DOMAINS.map(d => ({ id: d.id, name: d.name, color: d.color, icon: d.icon, tagline: d.tagline })) });
     if (method === 'GET' && path === 'yajna') return NextResponse.json(YAJNA);
     if (method === 'GET' && path === 'universe') return NextResponse.json({ scales: UNIVERSE_SCALES });
+    if (method === 'GET' && path === 'chakras') return NextResponse.json({ chakras: CHAKRA_OPENING });
+    if (method === 'GET' && path === 'vedic-cosmos') return NextResponse.json(VEDIC_BODY_COSMOS);
 
     // Community: anonymous public reflections
     if (method === 'GET' && path === 'community') {
