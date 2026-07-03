@@ -353,6 +353,14 @@ function WhyMattersSection() {
 const PAGE_LINKS = [
   { href: '/awakening', title: 'Awakening', devanagari: '\u091C\u093E\u0917\u0930\u0923', desc: 'Complete practices to open the 7 chakras + Vedic body-cosmos correspondences.', color: 'from-fuchsia-500 to-purple-600', Icon: Sparkles },
   { href: '/explore/vedas', title: 'The Vedic Tree', devanagari: '\u0935\u0947\u0926\u0935\u0943\u0915\u094D\u0937', desc: '4 Vedas, 108 Upanishads, 6 philosophies \u2014 the living library.', color: 'from-amber-400 to-orange-600', Icon: BookOpen },
+  { href: '/explore/ashramas', title: 'Four Life Stages', devanagari: '\u091A\u0924\u0941\u0930\u093E\u0936\u094D\u0930\u092E', desc: 'Brahmacharya, Grihastha, Vanaprastha, Sannyasa \u2014 the 100-year map.', color: 'from-amber-400 to-fuchsia-500', Icon: Compass },
+  { href: '/explore/purusharthas', title: 'Four Aims of Life', devanagari: '\u092A\u0941\u0930\u0941\u0937\u093E\u0930\u094D\u0925', desc: 'Dharma, Artha, Kama, Moksha \u2014 the complete map.', color: 'from-amber-400 to-purple-600', Icon: Compass },
+  { href: '/explore/varnas', title: 'The Four Orders', devanagari: '\u091A\u093E\u0924\u0941\u0930\u094D\u0935\u0930\u094D\u0923\u094D\u092F', desc: 'Brahmana, Kshatriya, Vaishya, Shudra \u2014 based on qualities.', color: 'from-amber-400 to-cyan-500', Icon: Users },
+  { href: '/explore/samskaras', title: 'Sixteen Sacraments', devanagari: '\u0937\u094B\u0921\u0936 \u0938\u0902\u0938\u094D\u0915\u093E\u0930', desc: 'From conception to cremation \u2014 the sixteen life rites.', color: 'from-cyan-400 to-fuchsia-500', Icon: Flame },
+  { href: '/explore/gods', title: 'The Gods', devanagari: '\u0926\u0947\u0935\u0917\u0923', desc: 'Shiva, Vishnu, Devi \u2014 decorations, weapons, body connections.', color: 'from-amber-400 to-fuchsia-500', Icon: Sparkles },
+  { href: '/explore/avatars', title: 'The Avatars', devanagari: '\u0905\u0935\u0924\u093E\u0930', desc: 'Ten of Vishnu, seven of Shiva, seven of Devi.', color: 'from-cyan-400 to-purple-600', Icon: InfinityIcon },
+  { href: '/explore/aghoris', title: 'The Aghoris', devanagari: '\u0905\u0918\u094B\u0930', desc: 'Cremation-ground mystics who see no impurity.', color: 'from-slate-500 to-purple-800', Icon: Flame },
+  { href: '/explore/sadhus', title: 'Sadhus & Ascetics', devanagari: '\u0938\u093E\u0927\u0941', desc: 'Nine great orders of Hindu renunciation.', color: 'from-orange-400 to-red-600', Icon: Users },
   { href: '/explore/nakshatras', title: '27 Nakshatras', devanagari: '\u0928\u0915\u094D\u0937\u0924\u094D\u0930', desc: 'Lunar mansions \u2014 the sky as a cognitive map.', color: 'from-indigo-400 to-purple-500', Icon: Sparkles },
   { href: '/explore/koshas', title: 'The Five Koshas', devanagari: '\u092A\u0902\u091A \u0915\u094B\u0936', desc: 'Food, breath, mind, wisdom, bliss \u2014 the five sheaths.', color: 'from-cyan-400 to-blue-500', Icon: Heart },
   { href: '/explore/mythology', title: 'Mythology', devanagari: '\u092A\u0941\u0930\u093E\u0923', desc: 'Gods, ten avatars, and the two epics.', color: 'from-fuchsia-400 to-purple-500', Icon: Users },
@@ -388,8 +396,8 @@ function ExploreSection() {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <Badge className="bg-purple-500/20 border-purple-300/30 text-purple-100 uppercase tracking-[0.25em] text-[10px]">Explore Chaitava</Badge>
-          <div className="font-devanagari text-2xl text-purple-300 mt-4">एकोनत्रिंशत् द्वार</div>
-          <h2 className="font-[Cormorant_Garamond,serif] text-4xl md:text-6xl mt-3 text-white">Twenty-nine doorways.</h2>
+          <div className="font-devanagari text-2xl text-purple-300 mt-4">अष्टत्रिंशत् द्वार</div>
+          <h2 className="font-[Cormorant_Garamond,serif] text-4xl md:text-6xl mt-3 text-white">Thirty-eight doorways.</h2>
           <p className="text-slate-400 mt-3">Choose one. Return tomorrow. The doorway will have deepened.</p>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">

@@ -101,3 +101,52 @@
 #====================================================================================================
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
+
+user_problem_statement: |
+  Chaitava — massive Vedic + science platform. Latest additions:
+  1. Deep lore on Aghoris, Sadhus, Gods (Shiva/Vishnu/Brahma/Devi/Ganesha/Hanuman/Kartikeya/Kali/Durga/Lakshmi/Saraswati/Surya) with decorations, weapons, body-connections, formation stories.
+  2. Avatars — Dashavatara of Vishnu (Matsya → Kalki) + Shiva avatars + Devi avatars, with reasons for incarnation.
+  3. Phases of life (Ashramas): Brahmacharya, Grihastha, Vanaprastha, Sannyasa + related frameworks (Purusharthas, Varnas, Samskaras).
+
+backend:
+  - task: "New content endpoints (aghoris, sadhus, gods, avatars, ashramas, purusharthas, varnas, samskaras)"
+    implemented: true
+    working: true
+    file: "app/api/[[...path]]/route.js + lib/content-gods.js + lib/content-life-stages.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "All 8 endpoints returning 200 with rich JSON. Verified via curl."
+
+frontend:
+  - task: "Explore pages for aghoris/sadhus/gods/avatars/ashramas/purusharthas/varnas/samskaras via /explore/[slug]"
+    implemented: true
+    working: true
+    file: "app/explore/[slug]/page.js + app/page.js grid"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Confirmed via screenshot — Ashramas timeline with 4 clickable stage circles, Brahmacharya detail card renders with all duties, purushartha, practices, body-chakra connection, key texts. All 8 new sections wired into home grid (now 38 doorways)."
+
+metadata:
+  created_by: "main_agent"
+  version: "1.1"
+  test_sequence: 0
+  run_ui: false
+
+test_plan:
+  current_focus: []
+  stuck_tasks: []
+  test_all: false
+  test_priority: "high_first"
+
+agent_communication:
+  - agent: "main"
+    message: |
+      Added 8 new content sections: Aghoris, Sadhus, Gods (12 major deities), Avatars (Dashavatara + Shiva + Devi), Ashramas (4 life stages), Purusharthas (4 aims), Varnas (4 orders), Samskaras (16 sacraments). All wired via /explore/[slug] dynamic route. All API endpoints tested and returning 200. Home grid now shows 38 doorways.

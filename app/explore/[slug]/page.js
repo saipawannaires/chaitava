@@ -16,6 +16,14 @@ const SECTIONS = {
   festivals: { title: 'Festivals & Routes', dev: 'उत्सव', tagline: 'Ten major festivals and five pilgrimage circuits.', color: 'from-amber-500 to-red-500', endpoint: 'festivals' },
   'lost-civilizations': { title: 'Lost Civilizations & Archived Temples', dev: 'लुप्त सभ्यता', tagline: 'Vanished worlds and destroyed sanctuaries — what survives and what does not.', color: 'from-slate-400 to-purple-500', endpoint: 'lost-civilizations' },
   shop: { title: 'Sacred Store', dev: 'दुकान', tagline: 'Mala, puja kits, homa supplies, meditation tools. Curated, ethical.', color: 'from-emerald-400 to-teal-500', endpoint: 'shop' },
+  aghoris: { title: 'The Aghoris', dev: 'अघोर', tagline: 'The path that sees no impurity. Cremation-ground mystics who worship Shiva as Bhairava.', color: 'from-slate-500 to-purple-800', endpoint: 'aghoris' },
+  sadhus: { title: 'Sadhus & Ascetics', dev: 'साधु', tagline: 'The nine great orders of Hindu renunciation — from Naga warriors to Nath yogis.', color: 'from-orange-400 to-red-600', endpoint: 'sadhus' },
+  gods: { title: 'The Gods', dev: 'देवगण', tagline: 'Shiva, Vishnu, Brahma, Devi — their decorations, weapons, and body correspondences.', color: 'from-amber-400 to-fuchsia-500', endpoint: 'gods' },
+  avatars: { title: 'The Avatars', dev: 'अवतार', tagline: 'Ten of Vishnu, seven of Shiva, seven of Devi — why the divine descends.', color: 'from-cyan-400 to-purple-600', endpoint: 'avatars' },
+  ashramas: { title: 'The Four Life Stages', dev: 'चतुराश्रम', tagline: 'Brahmacharya · Grihastha · Vanaprastha · Sannyasa — the classic 100-year map of a human life.', color: 'from-amber-400 to-fuchsia-500', endpoint: 'ashramas' },
+  purusharthas: { title: 'Four Aims of Life', dev: 'पुरुषार्थ', tagline: 'Dharma · Artha · Kama · Moksha — everything a human being can legitimately pursue.', color: 'from-amber-400 to-purple-600', endpoint: 'purusharthas' },
+  varnas: { title: 'The Four Orders', dev: 'चातुर्वर्ण्य', tagline: 'Brahmana · Kshatriya · Vaishya · Shudra — the original functional framework of society.', color: 'from-amber-400 to-cyan-500', endpoint: 'varnas' },
+  samskaras: { title: 'Sixteen Sacraments', dev: 'षोडश संस्कार', tagline: 'From conception to cremation — the sixteen rites that mark a full human life.', color: 'from-cyan-400 to-fuchsia-500', endpoint: 'samskaras' },
 };
 
 export default function ExplorePage() {
@@ -62,6 +70,14 @@ function Renderer({ sectionKey, data, meta }) {
   if (sectionKey === 'festivals') return <FestivalsView data={data}/>;
   if (sectionKey === 'lost-civilizations') return <LostView data={data}/>;
   if (sectionKey === 'shop') return <ShopView data={data}/>;
+  if (sectionKey === 'aghoris') return <AghorisView data={data}/>;
+  if (sectionKey === 'sadhus') return <SadhusView data={data}/>;
+  if (sectionKey === 'gods') return <GodsView data={data}/>;
+  if (sectionKey === 'avatars') return <AvatarsView data={data}/>;
+  if (sectionKey === 'ashramas') return <AshramasView data={data}/>;
+  if (sectionKey === 'purusharthas') return <PurusharthasView data={data}/>;
+  if (sectionKey === 'varnas') return <VarnasView data={data}/>;
+  if (sectionKey === 'samskaras') return <SamskarasView data={data}/>;
   return null;
 }
 
@@ -243,3 +259,448 @@ function ShopView({ data }) {
     ))}</div>
   </>);
 }
+
+
+// -------------------- Aghoris --------------------
+function AghorisView({ data }) {
+  return (<div className="space-y-6">
+    <Card className="bg-white/[0.03] border-white/10 relative overflow-hidden">
+      <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-gradient-to-br from-purple-500 to-slate-700 opacity-20 blur-3xl"/>
+      <CardContent className="p-8 relative">
+        <div className="text-purple-300 text-xs uppercase tracking-widest mb-3">Overview</div>
+        <p className="text-slate-200 leading-relaxed text-lg">{data.intro}</p>
+      </CardContent>
+    </Card>
+
+    <div className="grid md:grid-cols-2 gap-4">
+      <Card className="bg-white/[0.03] border-white/10"><CardContent className="p-6">
+        <div className="text-amber-300 text-xs uppercase tracking-widest mb-2">Historical Origin</div>
+        <p className="text-slate-200 leading-relaxed">{data.origin}</p>
+      </CardContent></Card>
+      <Card className="bg-white/[0.03] border-white/10"><CardContent className="p-6">
+        <div className="text-fuchsia-300 text-xs uppercase tracking-widest mb-2">Core Philosophy</div>
+        <p className="text-slate-200 leading-relaxed">{data.philosophy}</p>
+      </CardContent></Card>
+    </div>
+
+    <h3 className="font-[Cormorant_Garamond,serif] text-3xl text-white text-center mt-6">Sacred Practices</h3>
+    <div className="grid md:grid-cols-2 gap-3">{data.practices.map(p => (
+      <Card key={p.name} className="bg-white/[0.03] border-white/10"><CardContent className="p-5">
+        <div className="font-devanagari text-lg text-purple-300">{p.dev}</div>
+        <div className="font-[Cormorant_Garamond,serif] text-2xl text-white">{p.name}</div>
+        <p className="text-slate-300 text-sm mt-2 leading-relaxed">{p.desc}</p>
+      </CardContent></Card>
+    ))}</div>
+
+    <h3 className="font-[Cormorant_Garamond,serif] text-3xl text-white text-center mt-6">Symbols &amp; Ornaments</h3>
+    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">{data.symbols.map(s => (
+      <Card key={s.item} className="bg-white/[0.03] border-white/10"><CardContent className="p-4">
+        <div className="text-amber-300 font-semibold">{s.item}</div>
+        <p className="text-slate-300 text-sm mt-1 leading-relaxed">{s.meaning}</p>
+      </CardContent></Card>
+    ))}</div>
+
+    <h3 className="font-[Cormorant_Garamond,serif] text-3xl text-white text-center mt-6">Famous Aghoris</h3>
+    <div className="grid md:grid-cols-2 gap-3">{data.famous.map(f => (
+      <Card key={f.name} className="bg-white/[0.03] border-white/10"><CardContent className="p-5">
+        {f.dev && <div className="font-devanagari text-lg text-purple-300">{f.dev}</div>}
+        <div className="font-[Cormorant_Garamond,serif] text-2xl text-white">{f.name}</div>
+        <p className="text-slate-300 text-sm mt-2 leading-relaxed">{f.about}</p>
+      </CardContent></Card>
+    ))}</div>
+
+    <Card className="bg-gradient-to-br from-red-900/30 to-purple-900/20 border-red-400/20 mt-6"><CardContent className="p-6">
+      <div className="text-red-300 text-xs uppercase tracking-widest mb-2">Beyond the Stereotypes</div>
+      <p className="text-slate-200 leading-relaxed">{data.misconceptions}</p>
+    </CardContent></Card>
+  </div>);
+}
+
+// -------------------- Sadhus --------------------
+function SadhusView({ data }) {
+  return (<div className="space-y-6">
+    <Card className="bg-white/[0.03] border-white/10"><CardContent className="p-8">
+      <p className="text-slate-200 leading-relaxed text-lg">{data.intro}</p>
+    </CardContent></Card>
+
+    <h3 className="font-[Cormorant_Garamond,serif] text-3xl text-white text-center mt-6">Nine Great Orders</h3>
+    <div className="grid md:grid-cols-2 gap-4">{data.types.map(t => (
+      <Card key={t.name} className="bg-white/[0.03] border-white/10 relative overflow-hidden">
+        <div className={`absolute -top-16 -right-16 w-40 h-40 rounded-full bg-gradient-to-br ${t.color} opacity-20 blur-3xl`}/>
+        <CardContent className="p-6 relative">
+          <div className="font-devanagari text-xl text-white">{t.dev}</div>
+          <h4 className={`font-[Cormorant_Garamond,serif] text-3xl bg-gradient-to-r ${t.color} bg-clip-text text-transparent`}>{t.name}</h4>
+          <p className="text-slate-200 mt-3 leading-relaxed">{t.about}</p>
+          <div className="mt-3 space-y-1.5">
+            <div className="text-xs"><span className="text-emerald-300 uppercase tracking-widest">Practice · </span><span className="text-slate-300">{t.practice}</span></div>
+            <div className="text-xs"><span className="text-cyan-300 uppercase tracking-widest">Identify · </span><span className="text-slate-300">{t.identify}</span></div>
+          </div>
+        </CardContent>
+      </Card>
+    ))}</div>
+
+    <Card className="bg-gradient-to-br from-amber-900/30 to-red-900/20 border-amber-400/20 mt-6"><CardContent className="p-6">
+      <div className="text-amber-300 text-xs uppercase tracking-widest mb-2">How One Becomes a Sadhu</div>
+      <p className="text-slate-200 leading-relaxed">{data.becoming}</p>
+    </CardContent></Card>
+  </div>);
+}
+
+// -------------------- Gods --------------------
+function GodsView({ data }) {
+  const [active, setActive] = useState(0);
+  const g = data.gods[active];
+  return (<div>
+    {/* God selector */}
+    <div className="flex gap-2 overflow-x-auto pb-3 mb-6 -mx-4 px-4 justify-start md:justify-center">
+      {data.gods.map((god, i) => (
+        <button key={god.id} onClick={() => setActive(i)}
+          className={`shrink-0 px-4 py-2 rounded-full border transition ${i === active ? 'bg-white/10 border-white/40 text-white' : 'border-white/10 text-slate-400 hover:text-white hover:bg-white/5'}`}>
+          <span className="font-devanagari text-base">{god.dev}</span> <span className="ml-1 text-sm">{god.name}</span>
+        </button>
+      ))}
+    </div>
+
+    {/* Hero card */}
+    <Card className="bg-white/[0.03] border-white/10 relative overflow-hidden">
+      <div className={`absolute -top-32 -right-24 w-96 h-96 rounded-full bg-gradient-to-br ${g.color} opacity-25 blur-3xl`}/>
+      <div className={`absolute -bottom-24 -left-24 w-72 h-72 rounded-full bg-gradient-to-br ${g.color} opacity-15 blur-3xl`}/>
+      <CardContent className="p-8 relative">
+        <div className="font-devanagari text-4xl md:text-6xl text-white">{g.dev}</div>
+        <h2 className={`font-[Cormorant_Garamond,serif] text-5xl md:text-7xl bg-gradient-to-r ${g.color} bg-clip-text text-transparent mt-1`}>{g.name}</h2>
+        <div className="text-slate-300 mt-2 text-lg">{g.role}</div>
+        <div className="grid md:grid-cols-3 gap-3 mt-5 text-sm">
+          <div><span className="text-amber-300 uppercase tracking-widest text-xs">Consort · </span><span className="text-slate-300">{g.consort}</span></div>
+          <div><span className="text-emerald-300 uppercase tracking-widest text-xs">Mount · </span><span className="text-slate-300">{g.mount}</span></div>
+          <div><span className="text-cyan-300 uppercase tracking-widest text-xs">Abode · </span><span className="text-slate-300">{g.abode}</span></div>
+        </div>
+      </CardContent>
+    </Card>
+
+    {/* Formation */}
+    <Card className="bg-white/[0.03] border-white/10 mt-4"><CardContent className="p-6">
+      <div className="text-fuchsia-300 text-xs uppercase tracking-widest mb-2">Formation &amp; Origin Story</div>
+      <p className="text-slate-200 leading-relaxed">{g.formation}</p>
+    </CardContent></Card>
+
+    {/* Decorations */}
+    <h3 className="font-[Cormorant_Garamond,serif] text-3xl text-white text-center mt-8 mb-4">Decorations &amp; Their Meaning</h3>
+    <div className="grid md:grid-cols-2 gap-3">{g.decorations.map(d => (
+      <Card key={d.item} className="bg-white/[0.03] border-white/10"><CardContent className="p-5">
+        <div className="flex items-baseline gap-2 flex-wrap">
+          <span className="font-devanagari text-lg text-purple-300">{d.dev}</span>
+          <span className="font-[Cormorant_Garamond,serif] text-xl text-white">{d.item}</span>
+        </div>
+        <p className="text-slate-300 text-sm mt-2 leading-relaxed">{d.why}</p>
+      </CardContent></Card>
+    ))}</div>
+
+    {/* Weapons */}
+    <h3 className="font-[Cormorant_Garamond,serif] text-3xl text-white text-center mt-8 mb-4">Weapons &amp; How They Are Used</h3>
+    <div className="grid md:grid-cols-2 gap-3">{g.weapons.map(w => (
+      <Card key={w.name} className="bg-white/[0.03] border-white/10"><CardContent className="p-5">
+        <div className="text-amber-300 font-semibold">{w.name}</div>
+        <p className="text-slate-300 text-sm mt-2 leading-relaxed">{w.used_for}</p>
+      </CardContent></Card>
+    ))}</div>
+
+    {/* Body connections */}
+    <Card className="bg-gradient-to-br from-cyan-900/30 to-blue-900/20 border-cyan-400/20 mt-8"><CardContent className="p-6">
+      <div className="text-cyan-300 text-xs uppercase tracking-widest mb-2">Human Body &amp; Chakra Connections</div>
+      <p className="text-slate-200 leading-relaxed">{g.body_connections}</p>
+    </CardContent></Card>
+
+    {/* Forms */}
+    <h3 className="font-[Cormorant_Garamond,serif] text-2xl text-white text-center mt-8 mb-4">Major Forms</h3>
+    <div className="flex flex-wrap gap-2 justify-center">{g.forms.map(f => (
+      <Badge key={f} className="bg-white/[0.05] border-white/10 text-slate-300 text-sm py-1.5 px-3">{f}</Badge>
+    ))}</div>
+  </div>);
+}
+
+// -------------------- Avatars --------------------
+function AvatarsView({ data }) {
+  return (<div className="space-y-6">
+    <Card className="bg-white/[0.03] border-white/10"><CardContent className="p-8">
+      <p className="text-slate-200 leading-relaxed text-lg">{data.intro}</p>
+    </CardContent></Card>
+
+    <Tabs defaultValue="vishnu" className="w-full">
+      <TabsList className="bg-white/[0.03] border border-white/10 mx-auto flex flex-wrap justify-center h-auto">
+        <TabsTrigger value="vishnu" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500/60 data-[state=active]:to-cyan-500/60 px-6 py-2.5">Dashavatara (Vishnu)</TabsTrigger>
+        <TabsTrigger value="shiva" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500/60 data-[state=active]:to-slate-500/60 px-6 py-2.5">Shiva Avatars</TabsTrigger>
+        <TabsTrigger value="devi" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-red-500/60 data-[state=active]:to-fuchsia-500/60 px-6 py-2.5">Devi Avatars</TabsTrigger>
+      </TabsList>
+
+      <TabsContent value="vishnu" className="mt-8 space-y-4">
+        {data.vishnu_avatars.map(a => (
+          <Card key={a.n} className="bg-white/[0.03] border-white/10 relative overflow-hidden">
+            <div className={`absolute -top-20 -right-20 w-56 h-56 rounded-full bg-gradient-to-br ${a.color} opacity-20 blur-3xl`}/>
+            <CardContent className="p-6 relative">
+              <div className="flex items-baseline gap-3 flex-wrap">
+                <div className={`text-xs uppercase tracking-widest bg-gradient-to-r ${a.color} bg-clip-text text-transparent font-semibold`}>Avatar #{a.n}</div>
+                <div className="text-slate-500 text-xs">{a.era}</div>
+              </div>
+              <div className="flex items-baseline gap-3 flex-wrap mt-2">
+                <span className="font-devanagari text-2xl text-white">{a.dev}</span>
+                <h4 className={`font-[Cormorant_Garamond,serif] text-4xl bg-gradient-to-r ${a.color} bg-clip-text text-transparent`}>{a.name}</h4>
+                <span className="text-slate-400 italic">— {a.form}</span>
+              </div>
+              <div className="mt-4 space-y-3">
+                <div><div className="text-amber-300 text-xs uppercase tracking-widest mb-1">Why He Descended</div><p className="text-slate-200 leading-relaxed">{a.why}</p></div>
+                <div><div className="text-fuchsia-300 text-xs uppercase tracking-widest mb-1">Symbolism</div><p className="text-slate-200 leading-relaxed">{a.symbolism}</p></div>
+                <div><div className="text-cyan-300 text-xs uppercase tracking-widest mb-1">Weapons</div><p className="text-slate-200 leading-relaxed">{a.weapons}</p></div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </TabsContent>
+
+      <TabsContent value="shiva" className="mt-8">
+        <div className="grid md:grid-cols-2 gap-3">{data.shiva_avatars.map(a => (
+          <Card key={a.name} className="bg-white/[0.03] border-white/10 relative overflow-hidden">
+            <div className={`absolute -top-16 -right-16 w-40 h-40 rounded-full bg-gradient-to-br ${a.color} opacity-20 blur-3xl`}/>
+            <CardContent className="p-5 relative">
+              <div className="font-devanagari text-xl text-white">{a.dev}</div>
+              <div className={`font-[Cormorant_Garamond,serif] text-2xl bg-gradient-to-r ${a.color} bg-clip-text text-transparent`}>{a.name}</div>
+              <p className="text-slate-300 mt-2 leading-relaxed text-sm">{a.about}</p>
+            </CardContent>
+          </Card>
+        ))}</div>
+      </TabsContent>
+
+      <TabsContent value="devi" className="mt-8">
+        <div className="grid md:grid-cols-2 gap-3">{data.devi_avatars.map(a => (
+          <Card key={a.name} className="bg-white/[0.03] border-white/10 relative overflow-hidden">
+            <div className={`absolute -top-16 -right-16 w-40 h-40 rounded-full bg-gradient-to-br ${a.color} opacity-20 blur-3xl`}/>
+            <CardContent className="p-5 relative">
+              <div className="font-devanagari text-xl text-white">{a.dev}</div>
+              <div className={`font-[Cormorant_Garamond,serif] text-2xl bg-gradient-to-r ${a.color} bg-clip-text text-transparent`}>{a.name}</div>
+              <p className="text-slate-300 mt-2 leading-relaxed text-sm">{a.about}</p>
+            </CardContent>
+          </Card>
+        ))}</div>
+      </TabsContent>
+    </Tabs>
+
+    <Card className="bg-gradient-to-br from-amber-900/30 to-orange-900/20 border-amber-400/20 mt-8"><CardContent className="p-6">
+      <div className="text-amber-300 text-xs uppercase tracking-widest mb-2">Why the Divine Descends — from the Bhagavad Gita</div>
+      <p className="text-slate-200 leading-relaxed italic">{data.why_incarnate}</p>
+    </CardContent></Card>
+  </div>);
+}
+
+// -------------------- Ashramas (Four Life Stages) --------------------
+function AshramasView({ data }) {
+  const [active, setActive] = useState(0);
+  const s = data.stages[active];
+  return (<div className="space-y-6">
+    <Card className="bg-white/[0.03] border-white/10"><CardContent className="p-8">
+      <p className="text-slate-200 leading-relaxed text-lg">{data.intro}</p>
+      <p className="text-slate-300 leading-relaxed mt-4 italic">{data.overview}</p>
+    </CardContent></Card>
+
+    {/* Timeline */}
+    <div className="relative py-4">
+      <div className="absolute left-0 right-0 top-1/2 h-0.5 bg-gradient-to-r from-cyan-500/40 via-amber-500/40 via-emerald-500/40 to-fuchsia-500/40"/>
+      <div className="relative grid grid-cols-4 gap-2">
+        {data.stages.map((stage, i) => (
+          <button key={stage.n} onClick={() => setActive(i)}
+            className={`group flex flex-col items-center gap-2 transition ${i === active ? 'scale-105' : 'opacity-70 hover:opacity-100'}`}>
+            <div className={`w-14 h-14 rounded-full bg-gradient-to-br ${stage.color} flex items-center justify-center shadow-lg ring-2 ${i === active ? 'ring-white/60' : 'ring-white/10'}`}>
+              <span className="text-white text-xl font-[Cormorant_Garamond,serif]">{stage.n}</span>
+            </div>
+            <div className="font-devanagari text-sm text-white text-center">{stage.dev}</div>
+            <div className="text-slate-200 font-semibold text-sm text-center">{stage.name}</div>
+            <div className="text-slate-400 text-xs">{stage.age}</div>
+          </button>
+        ))}
+      </div>
+    </div>
+
+    {/* Selected stage detail */}
+    <Card className="bg-white/[0.03] border-white/10 relative overflow-hidden">
+      <div className={`absolute -top-32 -right-24 w-96 h-96 rounded-full bg-gradient-to-br ${s.color} opacity-25 blur-3xl`}/>
+      <CardContent className="p-8 relative">
+        <div className={`text-xs uppercase tracking-widest bg-gradient-to-r ${s.color} bg-clip-text text-transparent font-semibold`}>Stage {s.n} · {s.age}</div>
+        <div className="font-devanagari text-4xl md:text-5xl text-white mt-2">{s.dev}</div>
+        <h2 className={`font-[Cormorant_Garamond,serif] text-5xl md:text-6xl bg-gradient-to-r ${s.color} bg-clip-text text-transparent mt-1`}>{s.name}</h2>
+        <div className="text-slate-300 text-lg mt-1">{s.english}</div>
+        <div className="text-slate-400 text-sm mt-3 italic">{s.symbol}</div>
+        <p className="text-slate-200 leading-relaxed mt-5 text-lg">{s.meaning}</p>
+      </CardContent>
+    </Card>
+
+    <div className="grid md:grid-cols-2 gap-4">
+      <Card className="bg-white/[0.03] border-white/10"><CardContent className="p-6">
+        <div className="text-amber-300 text-xs uppercase tracking-widest mb-3">Duties &amp; Way of Life</div>
+        <ul className="space-y-2">{s.duties.map((d, i) => (
+          <li key={i} className="text-slate-200 flex gap-2 leading-relaxed"><span className="text-amber-300 shrink-0">•</span>{d}</li>
+        ))}</ul>
+      </CardContent></Card>
+      <div className="space-y-4">
+        <Card className="bg-white/[0.03] border-white/10"><CardContent className="p-6">
+          <div className="text-fuchsia-300 text-xs uppercase tracking-widest mb-2">Primary Purushartha</div>
+          <p className="text-slate-200 leading-relaxed">{s.purushartha}</p>
+        </CardContent></Card>
+        <Card className="bg-white/[0.03] border-white/10"><CardContent className="p-6">
+          <div className="text-emerald-300 text-xs uppercase tracking-widest mb-2">Core Practices</div>
+          <p className="text-slate-200 leading-relaxed">{s.practices}</p>
+        </CardContent></Card>
+      </div>
+    </div>
+
+    <div className="grid md:grid-cols-2 gap-4">
+      <Card className="bg-gradient-to-br from-cyan-900/30 to-blue-900/20 border-cyan-400/20"><CardContent className="p-6">
+        <div className="text-cyan-300 text-xs uppercase tracking-widest mb-2">Body &amp; Chakra Connection</div>
+        <p className="text-slate-200 leading-relaxed">{s.body_connection}</p>
+      </CardContent></Card>
+      <Card className="bg-gradient-to-br from-amber-900/30 to-orange-900/20 border-amber-400/20"><CardContent className="p-6">
+        <div className="text-amber-300 text-xs uppercase tracking-widest mb-2">Modern Interpretation</div>
+        <p className="text-slate-200 leading-relaxed">{s.modern}</p>
+      </CardContent></Card>
+    </div>
+
+    <Card className="bg-white/[0.03] border-white/10"><CardContent className="p-6">
+      <div className="text-purple-300 text-xs uppercase tracking-widest mb-2">Key Texts</div>
+      <div className="flex flex-wrap gap-2">{s.key_texts.map(t => (
+        <Badge key={t} className="bg-white/[0.05] border-white/10 text-slate-300 text-sm">{t}</Badge>
+      ))}</div>
+      <div className="text-slate-400 text-sm mt-4 italic">Transition · {s.completion}</div>
+    </CardContent></Card>
+
+    <h3 className="font-[Cormorant_Garamond,serif] text-3xl text-white text-center mt-10">Variations of the Path</h3>
+    <div className="grid md:grid-cols-3 gap-3">{data.variations.map(v => (
+      <Card key={v.name} className="bg-white/[0.03] border-white/10"><CardContent className="p-5">
+        {v.dev && <div className="font-devanagari text-lg text-purple-300">{v.dev}</div>}
+        <div className="text-white font-semibold">{v.name}</div>
+        <p className="text-slate-300 text-sm mt-2 leading-relaxed">{v.desc}</p>
+      </CardContent></Card>
+    ))}</div>
+
+    <Card className="bg-gradient-to-br from-purple-900/30 to-fuchsia-900/20 border-purple-400/20 mt-6"><CardContent className="p-6">
+      <div className="text-purple-300 text-xs uppercase tracking-widest mb-2">The Fractal Design</div>
+      <p className="text-slate-200 leading-relaxed">{data.connections}</p>
+    </CardContent></Card>
+  </div>);
+}
+
+// -------------------- Purusharthas --------------------
+function PurusharthasView({ data }) {
+  return (<div className="space-y-6">
+    <Card className="bg-white/[0.03] border-white/10"><CardContent className="p-8">
+      <p className="text-slate-200 leading-relaxed text-lg">{data.intro}</p>
+    </CardContent></Card>
+
+    <div className="grid md:grid-cols-2 gap-4">{data.aims.map(a => (
+      <Card key={a.n} className="bg-white/[0.03] border-white/10 relative overflow-hidden">
+        <div className={`absolute -top-20 -right-20 w-56 h-56 rounded-full bg-gradient-to-br ${a.color} opacity-25 blur-3xl`}/>
+        <CardContent className="p-6 relative">
+          <div className={`text-xs uppercase tracking-widest bg-gradient-to-r ${a.color} bg-clip-text text-transparent font-semibold`}>Aim #{a.n}</div>
+          <div className="flex items-baseline gap-3 flex-wrap mt-2">
+            <span className="font-devanagari text-2xl text-white">{a.dev}</span>
+            <h4 className={`font-[Cormorant_Garamond,serif] text-4xl bg-gradient-to-r ${a.color} bg-clip-text text-transparent`}>{a.name}</h4>
+          </div>
+          <div className="text-slate-300 mt-1">{a.english}</div>
+          <p className="text-slate-200 mt-3 leading-relaxed">{a.about}</p>
+          <div className="mt-3 p-3 rounded-lg bg-emerald-500/10 border border-emerald-400/20">
+            <div className="text-emerald-300 text-xs uppercase tracking-widest mb-1">Example</div>
+            <p className="text-slate-200 text-sm">{a.example}</p>
+          </div>
+          <div className="mt-2 p-3 rounded-lg bg-red-500/10 border border-red-400/20">
+            <div className="text-red-300 text-xs uppercase tracking-widest mb-1">Warning</div>
+            <p className="text-slate-200 text-sm">{a.warning}</p>
+          </div>
+        </CardContent>
+      </Card>
+    ))}</div>
+
+    <Card className="bg-gradient-to-br from-amber-900/30 to-purple-900/20 border-amber-400/20"><CardContent className="p-6">
+      <div className="text-amber-300 text-xs uppercase tracking-widest mb-2">The Progression</div>
+      <p className="text-slate-200 leading-relaxed">{data.progression}</p>
+    </CardContent></Card>
+  </div>);
+}
+
+// -------------------- Varnas --------------------
+function VarnasView({ data }) {
+  return (<div className="space-y-6">
+    <Card className="bg-white/[0.03] border-white/10"><CardContent className="p-8">
+      <p className="text-slate-200 leading-relaxed text-lg">{data.intro}</p>
+    </CardContent></Card>
+
+    <Card className="bg-yellow-500/10 border-yellow-400/30"><CardContent className="p-5">
+      <div className="text-yellow-300 text-xs uppercase tracking-widest mb-2">Important Context</div>
+      <p className="text-slate-200 leading-relaxed text-sm">{data.disclaimer}</p>
+    </CardContent></Card>
+
+    <div className="grid md:grid-cols-2 gap-4">{data.orders.map(o => (
+      <Card key={o.n} className="bg-white/[0.03] border-white/10 relative overflow-hidden">
+        <div className={`absolute -top-16 -right-16 w-48 h-48 rounded-full bg-gradient-to-br ${o.color} opacity-20 blur-3xl`}/>
+        <CardContent className="p-6 relative">
+          <div className={`text-xs uppercase tracking-widest bg-gradient-to-r ${o.color} bg-clip-text text-transparent font-semibold`}>Order #{o.n}</div>
+          <div className="flex items-baseline gap-3 flex-wrap mt-2">
+            <span className="font-devanagari text-2xl text-white">{o.dev}</span>
+            <h4 className={`font-[Cormorant_Garamond,serif] text-3xl bg-gradient-to-r ${o.color} bg-clip-text text-transparent`}>{o.name}</h4>
+          </div>
+          <div className="text-slate-300 mt-1">{o.english}</div>
+          <div className="text-slate-400 text-xs mt-2">{o.guna}</div>
+          <p className="text-slate-200 mt-3 leading-relaxed text-sm italic">{o.body_origin}</p>
+          <div className="mt-3">
+            <div className="text-amber-300 text-xs uppercase tracking-widest mb-1">Duties</div>
+            <ul className="space-y-1">{o.duties.map((d, i) => (<li key={i} className="text-slate-300 text-sm flex gap-2"><span className="text-amber-300">•</span>{d}</li>))}</ul>
+          </div>
+          <div className="mt-3">
+            <div className="text-fuchsia-300 text-xs uppercase tracking-widest mb-1">Inner Qualities</div>
+            <p className="text-slate-300 text-sm">{o.qualities}</p>
+          </div>
+          <div className="mt-3">
+            <div className="text-cyan-300 text-xs uppercase tracking-widest mb-1">Modern Parallel</div>
+            <p className="text-slate-300 text-sm">{o.modern}</p>
+          </div>
+          {o.note && <div className="mt-3 text-slate-400 text-sm italic">{o.note}</div>}
+        </CardContent>
+      </Card>
+    ))}</div>
+
+    <Card className="bg-gradient-to-br from-purple-900/30 to-cyan-900/20 border-purple-400/20"><CardContent className="p-6">
+      <div className="text-purple-300 text-xs uppercase tracking-widest mb-2">The Key Teaching · Satyakama Jabala</div>
+      <p className="text-slate-200 leading-relaxed">{data.key_teaching}</p>
+    </CardContent></Card>
+  </div>);
+}
+
+// -------------------- Samskaras --------------------
+function SamskarasView({ data }) {
+  return (<div className="space-y-6">
+    <Card className="bg-white/[0.03] border-white/10"><CardContent className="p-8">
+      <p className="text-slate-200 leading-relaxed text-lg">{data.intro}</p>
+    </CardContent></Card>
+
+    <div className="relative">
+      <div className="absolute left-6 top-4 bottom-4 w-px bg-gradient-to-b from-cyan-500/40 via-amber-500/40 to-fuchsia-500/40"/>
+      <div className="space-y-3">{data.list.map(s => (
+        <div key={s.n} className="relative pl-16">
+          <div className="absolute left-0 top-2 w-12 h-12 rounded-full bg-gradient-to-br from-cyan-500 to-fuchsia-500 flex items-center justify-center text-white font-[Cormorant_Garamond,serif] text-lg shadow-lg">
+            {s.n}
+          </div>
+          <Card className="bg-white/[0.03] border-white/10"><CardContent className="p-5">
+            <div className="flex items-baseline gap-2 flex-wrap">
+              <span className="font-devanagari text-lg text-purple-300">{s.dev}</span>
+              <span className="font-[Cormorant_Garamond,serif] text-2xl text-white">{s.name}</span>
+              <span className="text-slate-400 text-sm italic">— {s.english}</span>
+            </div>
+            <div className="text-amber-300 text-xs uppercase tracking-widest mt-1">When · {s.when}</div>
+            <p className="text-slate-200 mt-2 leading-relaxed text-sm">{s.desc}</p>
+          </CardContent></Card>
+        </div>
+      ))}</div>
+    </div>
+
+    <Card className="bg-gradient-to-br from-cyan-900/30 to-fuchsia-900/20 border-cyan-400/20"><CardContent className="p-6">
+      <div className="text-cyan-300 text-xs uppercase tracking-widest mb-2">Why "Samskara" also means "Imprint"</div>
+      <p className="text-slate-200 leading-relaxed">{data.meaning}</p>
+    </CardContent></Card>
+  </div>);
+}
+

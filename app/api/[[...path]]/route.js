@@ -8,6 +8,8 @@ import { MORE_LIFE_QUESTIONS, MORE_TEMPLES, MORE_BOOKS, MORE_MEDITATIONS } from 
 import { COACH_DOMAINS, YAJNA, UNIVERSE_SCALES } from '@/lib/content-final';
 import { CHAKRA_OPENING, VEDIC_BODY_COSMOS, MORE_TEMPLES_V2 } from '@/lib/content-v2';
 import { VEDIC_TREE, NAKSHATRAS, KOSHAS, MYTHOLOGY, LIFE_MYSTERIES, FESTIVALS, PILGRIMAGE_ROUTES, LOST_CIVILIZATIONS, ARCHIVED_TEMPLES, SHOP_ITEMS } from '@/lib/content-mega';
+import { AGHORIS, SADHUS, GODS, AVATARS } from '@/lib/content-gods';
+import { ASHRAMAS, PURUSHARTHAS, VARNAS, SAMSKARAS } from '@/lib/content-life-stages';
 
 // Merge expansions
 const ALL_QUESTIONS = [...LIFE_QUESTIONS, ...MORE_LIFE_QUESTIONS];
@@ -146,6 +148,14 @@ async function handler(request, context) {
     if (method === 'GET' && path === 'festivals') return NextResponse.json({ festivals: FESTIVALS, routes: PILGRIMAGE_ROUTES });
     if (method === 'GET' && path === 'lost-civilizations') return NextResponse.json({ civilizations: LOST_CIVILIZATIONS, archived: ARCHIVED_TEMPLES });
     if (method === 'GET' && path === 'shop') return NextResponse.json({ items: SHOP_ITEMS });
+    if (method === 'GET' && path === 'aghoris') return NextResponse.json(AGHORIS);
+    if (method === 'GET' && path === 'sadhus') return NextResponse.json(SADHUS);
+    if (method === 'GET' && path === 'gods') return NextResponse.json({ gods: GODS });
+    if (method === 'GET' && path === 'avatars') return NextResponse.json(AVATARS);
+    if (method === 'GET' && path === 'ashramas') return NextResponse.json(ASHRAMAS);
+    if (method === 'GET' && path === 'purusharthas') return NextResponse.json(PURUSHARTHAS);
+    if (method === 'GET' && path === 'varnas') return NextResponse.json(VARNAS);
+    if (method === 'GET' && path === 'samskaras') return NextResponse.json(SAMSKARAS);
 
     // Community: anonymous public reflections
     if (method === 'GET' && path === 'community') {
