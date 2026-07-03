@@ -3,6 +3,14 @@ import { MongoClient } from 'mongodb';
 import { v4 as uuidv4 } from 'uuid';
 import { WHY_CARDS, MALA, DEEKSHA, PUJA_VIDHANAM, COSMIC_TIMELINE, MEDITATIONS, SACRED_BOOKS, BODY_MAP, CHAKRA_QUIZ } from '@/lib/content';
 import { LIFE_QUESTIONS, WORLD_TEMPLES, SACRED_MUSIC } from '@/lib/content-extra';
+import { ANCIENT_KNOWLEDGE, LEARNING_PATHS, DAILY_PRACTICES, CHALLENGES, MYSTERIES } from '@/lib/content-more';
+import { MORE_LIFE_QUESTIONS, MORE_TEMPLES, MORE_BOOKS, MORE_MEDITATIONS } from '@/lib/content-expand';
+
+// Merge expansions
+const ALL_QUESTIONS = [...LIFE_QUESTIONS, ...MORE_LIFE_QUESTIONS];
+const ALL_TEMPLES = [...WORLD_TEMPLES, ...MORE_TEMPLES];
+const ALL_BOOKS = [...SACRED_BOOKS, ...MORE_BOOKS];
+const ALL_MEDITATIONS = [...MEDITATIONS, ...MORE_MEDITATIONS];
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -110,13 +118,18 @@ async function handler(request, context) {
     if (method === 'GET' && path === 'why') return NextResponse.json({ cards: WHY_CARDS });
     if (method === 'GET' && path === 'practices') return NextResponse.json({ mala: MALA, deeksha: DEEKSHA, puja: PUJA_VIDHANAM });
     if (method === 'GET' && path === 'timeline') return NextResponse.json({ eras: COSMIC_TIMELINE });
-    if (method === 'GET' && path === 'meditations') return NextResponse.json({ meditations: MEDITATIONS });
-    if (method === 'GET' && path === 'books') return NextResponse.json({ books: SACRED_BOOKS });
+    if (method === 'GET' && path === 'meditations') return NextResponse.json({ meditations: ALL_MEDITATIONS });
+    if (method === 'GET' && path === 'books') return NextResponse.json({ books: ALL_BOOKS });
     if (method === 'GET' && path === 'body-map') return NextResponse.json({ parts: BODY_MAP });
     if (method === 'GET' && path === 'chakra-quiz') return NextResponse.json({ questions: CHAKRA_QUIZ });
-    if (method === 'GET' && path === 'questions') return NextResponse.json({ questions: LIFE_QUESTIONS });
-    if (method === 'GET' && path === 'temples') return NextResponse.json({ temples: WORLD_TEMPLES });
+    if (method === 'GET' && path === 'questions') return NextResponse.json({ questions: ALL_QUESTIONS });
+    if (method === 'GET' && path === 'temples') return NextResponse.json({ temples: ALL_TEMPLES });
     if (method === 'GET' && path === 'music') return NextResponse.json({ tracks: SACRED_MUSIC });
+    if (method === 'GET' && path === 'knowledge') return NextResponse.json({ topics: ANCIENT_KNOWLEDGE });
+    if (method === 'GET' && path === 'paths') return NextResponse.json({ paths: LEARNING_PATHS });
+    if (method === 'GET' && path === 'daily-practices') return NextResponse.json(DAILY_PRACTICES);
+    if (method === 'GET' && path === 'challenges') return NextResponse.json({ challenges: CHALLENGES });
+    if (method === 'GET' && path === 'mysteries') return NextResponse.json({ mysteries: MYSTERIES });
 
     if (method === 'POST' && path === 'guru') {
       const { question } = await readBody(request);

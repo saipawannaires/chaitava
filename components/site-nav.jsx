@@ -4,16 +4,19 @@ import { Sparkles, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const LINKS = [
-  { href: '/#guru', label: 'AI Guru' },
-  { href: '/questions', label: 'Life Questions' },
+  { href: '/questions', label: 'Questions' },
   { href: '/practices', label: 'Practices' },
+  { href: '/knowledge', label: 'Ancient' },
+  { href: '/paths', label: 'Paths' },
+  { href: '/daily', label: 'Daily' },
+  { href: '/challenges', label: 'Challenges' },
   { href: '/meditate', label: 'Meditate' },
-  { href: '/map', label: 'World Map' },
+  { href: '/map', label: 'Map' },
   { href: '/timeline', label: 'Cosmos' },
   { href: '/books', label: 'Books' },
   { href: '/music', label: 'Music' },
   { href: '/journal', label: 'Journal' },
-  { href: '/connected', label: 'Connected' },
+  { href: '/mysteries', label: 'Mysteries' },
 ];
 
 export default function SiteNav() {
