@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { MongoClient } from 'mongodb';
 import { v4 as uuidv4 } from 'uuid';
 import { WHY_CARDS, MALA, DEEKSHA, PUJA_VIDHANAM, COSMIC_TIMELINE, MEDITATIONS, SACRED_BOOKS, BODY_MAP, CHAKRA_QUIZ } from '@/lib/content';
+import { LIFE_QUESTIONS, WORLD_TEMPLES, SACRED_MUSIC } from '@/lib/content-extra';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -113,6 +114,9 @@ async function handler(request, context) {
     if (method === 'GET' && path === 'books') return NextResponse.json({ books: SACRED_BOOKS });
     if (method === 'GET' && path === 'body-map') return NextResponse.json({ parts: BODY_MAP });
     if (method === 'GET' && path === 'chakra-quiz') return NextResponse.json({ questions: CHAKRA_QUIZ });
+    if (method === 'GET' && path === 'questions') return NextResponse.json({ questions: LIFE_QUESTIONS });
+    if (method === 'GET' && path === 'temples') return NextResponse.json({ temples: WORLD_TEMPLES });
+    if (method === 'GET' && path === 'music') return NextResponse.json({ tracks: SACRED_MUSIC });
 
     if (method === 'POST' && path === 'guru') {
       const { question } = await readBody(request);

@@ -351,13 +351,17 @@ function WhyMattersSection() {
 
 // -------------------- Explore Grid --------------------
 const PAGE_LINKS = [
+  { href: '/questions', title: 'Life Questions', desc: '15 deep questions with pre-written 4-perspective answers.', color: 'from-violet-400 to-purple-600', Icon: Compass },
   { href: '/practices', title: 'Sacred Practices', desc: 'Mala, Deeksha, and the 16-step daily puja explained.', color: 'from-amber-400 to-orange-600', Icon: Flame },
   { href: '/meditate', title: 'Meditation Center', desc: 'Eight practices with AI-guided scripts and animated timers.', color: 'from-cyan-400 to-blue-600', Icon: Circle },
-  { href: '/timeline', title: 'Cosmic Timeline', desc: 'From the Big Bang to this moment — science + wisdom side by side.', color: 'from-purple-400 to-fuchsia-600', Icon: Sparkles },
-  { href: '/books', title: 'Sacred Books', desc: 'Gita, Upanishads, Dhammapada, Quran, Tao Te Ching — AI summaries.', color: 'from-amber-300 to-yellow-600', Icon: BookOpen },
-  { href: '/connected', title: 'Everything Connected', desc: 'Type any concept. Follow the thread through science, spirit, history.', color: 'from-fuchsia-400 to-pink-600', Icon: Network },
-  { href: '/body', title: 'Body + Spirit', desc: 'Where chakras meet the nervous system.', color: 'from-emerald-400 to-teal-600', Icon: Heart },
-  { href: '/test', title: 'Chakra Balance', desc: 'A seven-question self-assessment of your energy centers.', color: 'from-violet-400 to-purple-600', Icon: Compass },
+  { href: '/map', title: 'World Sacred Sites', desc: '27 sites across 6 continents on an interactive map.', color: 'from-teal-400 to-cyan-600', Icon: Globe2 },
+  { href: '/timeline', title: 'Cosmic Timeline', desc: 'Big Bang to now — science + wisdom side by side.', color: 'from-purple-400 to-fuchsia-600', Icon: Sparkles },
+  { href: '/books', title: 'Sacred Books', desc: 'Gita, Upanishads, Bible, Quran, Tao Te Ching — AI summaries.', color: 'from-amber-300 to-yellow-600', Icon: BookOpen },
+  { href: '/music', title: 'Sacred Music', desc: 'Mantras, chants, Tibetan bowls, forest sounds, binaural.', color: 'from-orange-400 to-red-500', Icon: Play },
+  { href: '/journal', title: 'Spiritual Journal', desc: 'Daily entries with streak tracking. Private on your device.', color: 'from-pink-400 to-rose-600', Icon: Heart },
+  { href: '/connected', title: 'Everything Connected', desc: 'Type any concept. Follow the thread across all domains.', color: 'from-fuchsia-400 to-pink-600', Icon: Network },
+  { href: '/body', title: 'Body + Spirit', desc: 'Where chakras meet the nervous system.', color: 'from-emerald-400 to-teal-600', Icon: Brain },
+  { href: '/test', title: 'Chakra Balance', desc: 'Seven-question self-assessment of your energy centers.', color: 'from-violet-400 to-purple-600', Icon: Atom },
   { href: '/#masters', title: 'Great Masters', desc: 'Chat with AI personas of Krishna, Buddha, Jesus, Rumi.', color: 'from-pink-400 to-rose-600', Icon: Users },
 ];
 
