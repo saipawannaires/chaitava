@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
+import Link from 'next/link';
+import SiteNav from '@/components/site-nav';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
@@ -8,7 +10,7 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Sparkles, Sun, Moon, Play, Pause, RotateCcw, Send, ArrowRight, Flower2, Atom, BookOpen, Globe2, Heart, Loader2 } from 'lucide-react';
+import { Sparkles, Sun, Moon, Play, Pause, RotateCcw, Send, ArrowRight, Flower2, Atom, BookOpen, Globe2, Heart, Loader2, Brain, Infinity as InfinityIcon, Network, Flame, Circle, Hand, Users, Compass } from 'lucide-react';
 
 const HERO_BG = 'https://images.unsplash.com/photo-1610209455607-89e8b3e0e393?auto=format&fit=crop&w=2000&q=80';
 const COSMOS_BG = 'https://images.pexels.com/photos/956999/milky-way-starry-sky-night-sky-star-956999.jpeg?auto=compress&cs=tinysrgb&w=2000';
@@ -302,6 +304,92 @@ function ComparePanel() {
   );
 }
 
+// -------------------- Why This Matters --------------------
+const WHY_ICONS = { Brain, BookOpen, Network, Infinity: InfinityIcon };
+function WhyMattersSection() {
+  const [cards, setCards] = useState([]);
+  const [openIdx, setOpenIdx] = useState(null);
+  useEffect(() => { fetch('/api/why').then(r => r.json()).then(d => setCards(d.cards || [])); }, []);
+  return (
+    <section id="why" className="py-24 px-6 relative bg-black/30">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center max-w-3xl mx-auto mb-14">
+          <Badge className="bg-amber-500/20 border-amber-300/30 text-amber-100 uppercase tracking-[0.25em] text-[10px]">Why this matters</Badge>
+          <h2 className="font-[Cormorant_Garamond,serif] text-4xl md:text-6xl mt-4 text-white">Why should you actually care?</h2>
+          <p className="text-slate-300/80 mt-4 text-lg">Not because tradition says so. Because meditation, wisdom, interconnection, and Sanatana Dharma each answer a specific human need — with both scientific evidence and lived experience.</p>
+        </div>
+        <div className="grid md:grid-cols-2 gap-5">
+          {cards.map((c, i) => {
+            const Icon = WHY_ICONS[c.icon] || Sparkles;
+            const open = openIdx === i;
+            return (
+              <Card key={c.id} className="bg-white/[0.03] border-white/10 backdrop-blur relative overflow-hidden">
+                <div className={`absolute -top-20 -right-20 w-56 h-56 rounded-full bg-gradient-to-br ${c.color} opacity-20 blur-3xl`}/>
+                <CardContent className="p-6 relative">
+                  <div className="flex items-start gap-4">
+                    <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${c.color} flex items-center justify-center shrink-0`}><Icon size={22} className="text-white"/></div>
+                    <div className="flex-1">
+                      <h3 className="font-[Cormorant_Garamond,serif] text-3xl text-white">{c.title}</h3>
+                      <div className="text-purple-300 text-sm mt-1">{c.tagline}</div>
+                    </div>
+                  </div>
+                  <div className="mt-4 space-y-4">
+                    <div><div className="text-cyan-300 text-xs uppercase tracking-widest mb-1">Scientific</div><p className="text-slate-200 leading-relaxed">{c.scientific}</p></div>
+                    {open && <div><div className="text-fuchsia-300 text-xs uppercase tracking-widest mb-1">Spiritual</div><p className="text-slate-200 leading-relaxed">{c.spiritual}</p></div>}
+                    {open && <div><div className="text-amber-300 text-xs uppercase tracking-widest mb-2">Benefits</div><ul className="space-y-1">{c.benefits?.map((b, j) => (<li key={j} className="flex gap-2 text-slate-200"><span className="text-amber-300">•</span>{b}</li>))}</ul></div>}
+                  </div>
+                  <button onClick={() => setOpenIdx(open ? null : i)} className="mt-4 text-purple-300 hover:text-white text-sm">{open ? '— Show less' : '+ Show more'}</button>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// -------------------- Explore Grid --------------------
+const PAGE_LINKS = [
+  { href: '/practices', title: 'Sacred Practices', desc: 'Mala, Deeksha, and the 16-step daily puja explained.', color: 'from-amber-400 to-orange-600', Icon: Flame },
+  { href: '/meditate', title: 'Meditation Center', desc: 'Eight practices with AI-guided scripts and animated timers.', color: 'from-cyan-400 to-blue-600', Icon: Circle },
+  { href: '/timeline', title: 'Cosmic Timeline', desc: 'From the Big Bang to this moment — science + wisdom side by side.', color: 'from-purple-400 to-fuchsia-600', Icon: Sparkles },
+  { href: '/books', title: 'Sacred Books', desc: 'Gita, Upanishads, Dhammapada, Quran, Tao Te Ching — AI summaries.', color: 'from-amber-300 to-yellow-600', Icon: BookOpen },
+  { href: '/connected', title: 'Everything Connected', desc: 'Type any concept. Follow the thread through science, spirit, history.', color: 'from-fuchsia-400 to-pink-600', Icon: Network },
+  { href: '/body', title: 'Body + Spirit', desc: 'Where chakras meet the nervous system.', color: 'from-emerald-400 to-teal-600', Icon: Heart },
+  { href: '/test', title: 'Chakra Balance', desc: 'A seven-question self-assessment of your energy centers.', color: 'from-violet-400 to-purple-600', Icon: Compass },
+  { href: '/#masters', title: 'Great Masters', desc: 'Chat with AI personas of Krishna, Buddha, Jesus, Rumi.', color: 'from-pink-400 to-rose-600', Icon: Users },
+];
+
+function ExploreSection() {
+  return (
+    <section className="py-24 px-6 relative">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-12">
+          <Badge className="bg-purple-500/20 border-purple-300/30 text-purple-100 uppercase tracking-[0.25em] text-[10px]">Explore Sanatana</Badge>
+          <h2 className="font-[Cormorant_Garamond,serif] text-4xl md:text-6xl mt-4 text-white">Choose your doorway.</h2>
+        </div>
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {PAGE_LINKS.map((l) => {
+            const Icon = l.Icon;
+            return (
+              <Link key={l.href} href={l.href} className="group rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur p-6 hover:border-white/25 hover:-translate-y-1 transition relative overflow-hidden">
+                <div className={`absolute -top-16 -right-16 w-40 h-40 rounded-full bg-gradient-to-br ${l.color} opacity-25 blur-2xl group-hover:opacity-45 transition`}/>
+                <div className="relative">
+                  <div className={`w-11 h-11 rounded-xl bg-gradient-to-br ${l.color} flex items-center justify-center`}><Icon size={20} className="text-white"/></div>
+                  <h3 className="font-[Cormorant_Garamond,serif] text-2xl text-white mt-4">{l.title}</h3>
+                  <p className="text-slate-300 text-sm mt-2 leading-relaxed">{l.desc}</p>
+                  <div className="mt-3 text-purple-300 text-sm flex items-center gap-1">Open <ArrowRight size={12} className="group-hover:translate-x-1 transition"/></div>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // -------------------- Page --------------------
 function App() {
   const [daily, setDaily] = useState(null);
@@ -317,21 +405,7 @@ function App() {
       </div>
 
       {/* Nav */}
-      <nav className="sticky top-0 z-40 backdrop-blur-xl bg-[#0a0416]/60 border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 via-fuchsia-500 to-amber-400 flex items-center justify-center"><Sparkles size={16} className="text-white"/></div>
-            <div className="font-[Cormorant_Garamond,serif] text-2xl tracking-wide text-white">Sanatana</div>
-          </div>
-          <div className="hidden md:flex gap-6 text-sm text-slate-300">
-            <a href="#guru" className="hover:text-white">AI Guru</a>
-            <a href="#masters" className="hover:text-white">Great Masters</a>
-            <a href="#compare" className="hover:text-white">Compare</a>
-            <a href="#temple" className="hover:text-white">Temple</a>
-          </div>
-          <a href="#guru"><Button size="sm" className="bg-gradient-to-r from-purple-500 to-fuchsia-500">Ask AI <ArrowRight size={14} className="ml-1"/></Button></a>
-        </div>
-      </nav>
+      <SiteNav />
 
       {/* HERO */}
       <section className="relative pt-24 pb-16 px-6">
@@ -374,6 +448,12 @@ function App() {
       <section className="py-20 px-6 relative">
         <div className="max-w-7xl mx-auto"><GuruPanel/></div>
       </section>
+
+      {/* WHY THIS MATTERS */}
+      <WhyMattersSection />
+
+      {/* EXPLORE GRID */}
+      <ExploreSection />
 
       {/* MASTERS */}
       <section className="py-20 px-6 relative bg-black/20">
