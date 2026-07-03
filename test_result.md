@@ -150,3 +150,6 @@ agent_communication:
   - agent: "main"
     message: |
       Added 8 new content sections: Aghoris, Sadhus, Gods (12 major deities), Avatars (Dashavatara + Shiva + Devi), Ashramas (4 life stages), Purusharthas (4 aims), Varnas (4 orders), Samskaras (16 sacraments). All wired via /explore/[slug] dynamic route. All API endpoints tested and returning 200. Home grid now shows 38 doorways.
+  - agent: "main"
+    message: |
+      Added Rituals of Pooja (/explore/rituals) with 6-tab structure: 16 Upacharas (Shodashopachara), 12 Major Poojas (Ganesha, Lakshmi, Rudrabhisheka, Satyanarayana, Navagraha, Chandi Homa, Ayush Homa, Griha Pravesha, Sudarshana, Kaal Sarpa, Shraddha, Kalasha Sthapana — each with deity, when, purpose, essentials, mantras, steps, significance), 5 types of Aarti + famous aartis, 18 Pooja Implements (Kalasha, Panchapatra, Deepa, Shankha, Rudraksha, etc.), 9 Homas (Ganapati, Mrityunjaya, Sudarshana, Chandi, Ayush, Navagraha, Rudra, Ati-Rudra, Somayajna), and complete Daily Ritual schedule with the Five Debts framework. Home grid now 39 doorways. API /api/rituals returns 200, page verified via screenshots.

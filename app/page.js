@@ -357,6 +357,7 @@ const PAGE_LINKS = [
   { href: '/explore/purusharthas', title: 'Four Aims of Life', devanagari: '\u092A\u0941\u0930\u0941\u0937\u093E\u0930\u094D\u0925', desc: 'Dharma, Artha, Kama, Moksha \u2014 the complete map.', color: 'from-amber-400 to-purple-600', Icon: Compass },
   { href: '/explore/varnas', title: 'The Four Orders', devanagari: '\u091A\u093E\u0924\u0941\u0930\u094D\u0935\u0930\u094D\u0923\u094D\u092F', desc: 'Brahmana, Kshatriya, Vaishya, Shudra \u2014 based on qualities.', color: 'from-amber-400 to-cyan-500', Icon: Users },
   { href: '/explore/samskaras', title: 'Sixteen Sacraments', devanagari: '\u0937\u094B\u0921\u0936 \u0938\u0902\u0938\u094D\u0915\u093E\u0930', desc: 'From conception to cremation \u2014 the sixteen life rites.', color: 'from-cyan-400 to-fuchsia-500', Icon: Flame },
+  { href: '/explore/rituals', title: 'Rituals of Pooja', devanagari: '\u092A\u0942\u091C\u093E \u0935\u093F\u0927\u093E\u0928', desc: '16 upacharas, 12 major poojas, aartis, homas, implements.', color: 'from-orange-500 to-red-600', Icon: Flame },
   { href: '/explore/gods', title: 'The Gods', devanagari: '\u0926\u0947\u0935\u0917\u0923', desc: 'Shiva, Vishnu, Devi \u2014 decorations, weapons, body connections.', color: 'from-amber-400 to-fuchsia-500', Icon: Sparkles },
   { href: '/explore/avatars', title: 'The Avatars', devanagari: '\u0905\u0935\u0924\u093E\u0930', desc: 'Ten of Vishnu, seven of Shiva, seven of Devi.', color: 'from-cyan-400 to-purple-600', Icon: InfinityIcon },
   { href: '/explore/aghoris', title: 'The Aghoris', devanagari: '\u0905\u0918\u094B\u0930', desc: 'Cremation-ground mystics who see no impurity.', color: 'from-slate-500 to-purple-800', Icon: Flame },
@@ -396,8 +397,8 @@ function ExploreSection() {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <Badge className="bg-purple-500/20 border-purple-300/30 text-purple-100 uppercase tracking-[0.25em] text-[10px]">Explore Chaitava</Badge>
-          <div className="font-devanagari text-2xl text-purple-300 mt-4">अष्टत्रिंशत् द्वार</div>
-          <h2 className="font-[Cormorant_Garamond,serif] text-4xl md:text-6xl mt-3 text-white">Thirty-eight doorways.</h2>
+          <div className="font-devanagari text-2xl text-purple-300 mt-4">एकोनचत्वारिंशत् द्वार</div>
+          <h2 className="font-[Cormorant_Garamond,serif] text-4xl md:text-6xl mt-3 text-white">Thirty-nine doorways.</h2>
           <p className="text-slate-400 mt-3">Choose one. Return tomorrow. The doorway will have deepened.</p>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">

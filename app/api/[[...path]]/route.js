@@ -10,6 +10,7 @@ import { CHAKRA_OPENING, VEDIC_BODY_COSMOS, MORE_TEMPLES_V2 } from '@/lib/conten
 import { VEDIC_TREE, NAKSHATRAS, KOSHAS, MYTHOLOGY, LIFE_MYSTERIES, FESTIVALS, PILGRIMAGE_ROUTES, LOST_CIVILIZATIONS, ARCHIVED_TEMPLES, SHOP_ITEMS } from '@/lib/content-mega';
 import { AGHORIS, SADHUS, GODS, AVATARS } from '@/lib/content-gods';
 import { ASHRAMAS, PURUSHARTHAS, VARNAS, SAMSKARAS } from '@/lib/content-life-stages';
+import { POOJA_STEPS, POOJAS, AARTIS, PUJA_IMPLEMENTS, HOMAS, DAILY_RITUAL } from '@/lib/content-rituals';
 
 // Merge expansions
 const ALL_QUESTIONS = [...LIFE_QUESTIONS, ...MORE_LIFE_QUESTIONS];
@@ -156,6 +157,9 @@ async function handler(request, context) {
     if (method === 'GET' && path === 'purusharthas') return NextResponse.json(PURUSHARTHAS);
     if (method === 'GET' && path === 'varnas') return NextResponse.json(VARNAS);
     if (method === 'GET' && path === 'samskaras') return NextResponse.json(SAMSKARAS);
+    if (method === 'GET' && path === 'rituals') return NextResponse.json({
+      steps: POOJA_STEPS, poojas: POOJAS, aartis: AARTIS, implements: PUJA_IMPLEMENTS, homas: HOMAS, daily: DAILY_RITUAL
+    });
 
     // Community: anonymous public reflections
     if (method === 'GET' && path === 'community') {

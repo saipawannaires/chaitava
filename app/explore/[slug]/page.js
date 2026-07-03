@@ -24,6 +24,7 @@ const SECTIONS = {
   purusharthas: { title: 'Four Aims of Life', dev: 'पुरुषार्थ', tagline: 'Dharma · Artha · Kama · Moksha — everything a human being can legitimately pursue.', color: 'from-amber-400 to-purple-600', endpoint: 'purusharthas' },
   varnas: { title: 'The Four Orders', dev: 'चातुर्वर्ण्य', tagline: 'Brahmana · Kshatriya · Vaishya · Shudra — the original functional framework of society.', color: 'from-amber-400 to-cyan-500', endpoint: 'varnas' },
   samskaras: { title: 'Sixteen Sacraments', dev: 'षोडश संस्कार', tagline: 'From conception to cremation — the sixteen rites that mark a full human life.', color: 'from-cyan-400 to-fuchsia-500', endpoint: 'samskaras' },
+  rituals: { title: 'Rituals of Pooja', dev: 'पूजा विधान', tagline: 'The 16 upacharas · 12 major poojas · aartis · implements · fire rituals · the daily rhythm.', color: 'from-orange-500 to-red-600', endpoint: 'rituals' },
 };
 
 export default function ExplorePage() {
@@ -78,6 +79,7 @@ function Renderer({ sectionKey, data, meta }) {
   if (sectionKey === 'purusharthas') return <PurusharthasView data={data}/>;
   if (sectionKey === 'varnas') return <VarnasView data={data}/>;
   if (sectionKey === 'samskaras') return <SamskarasView data={data}/>;
+  if (sectionKey === 'rituals') return <RitualsView data={data}/>;
   return null;
 }
 
@@ -701,6 +703,229 @@ function SamskarasView({ data }) {
       <div className="text-cyan-300 text-xs uppercase tracking-widest mb-2">Why "Samskara" also means "Imprint"</div>
       <p className="text-slate-200 leading-relaxed">{data.meaning}</p>
     </CardContent></Card>
+  </div>);
+}
+
+
+// -------------------- Rituals of Pooja --------------------
+function RitualsView({ data }) {
+  return (<div>
+    <Tabs defaultValue="steps" className="w-full">
+      <TabsList className="bg-white/[0.03] border border-white/10 mx-auto flex flex-wrap justify-center h-auto gap-1">
+        <TabsTrigger value="steps" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-500/60 data-[state=active]:to-orange-500/60 px-4 py-2">16 Upacharas</TabsTrigger>
+        <TabsTrigger value="poojas" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-orange-500/60 data-[state=active]:to-red-500/60 px-4 py-2">Major Poojas</TabsTrigger>
+        <TabsTrigger value="aartis" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-yellow-500/60 data-[state=active]:to-orange-500/60 px-4 py-2">Aartis</TabsTrigger>
+        <TabsTrigger value="implements" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-emerald-500/60 data-[state=active]:to-cyan-500/60 px-4 py-2">Implements</TabsTrigger>
+        <TabsTrigger value="homas" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-orange-500/60 data-[state=active]:to-red-600/60 px-4 py-2">Homas</TabsTrigger>
+        <TabsTrigger value="daily" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-500/60 data-[state=active]:to-purple-500/60 px-4 py-2">Daily Rhythm</TabsTrigger>
+      </TabsList>
+
+      {/* 16 UPACHARAS */}
+      <TabsContent value="steps" className="mt-8 space-y-6">
+        <Card className="bg-white/[0.03] border-white/10"><CardContent className="p-8">
+          <div className="font-devanagari text-2xl text-amber-300">{data.steps.dev}</div>
+          <p className="text-slate-200 leading-relaxed text-lg mt-3">{data.steps.intro}</p>
+        </CardContent></Card>
+
+        <div className="relative">
+          <div className="absolute left-6 top-4 bottom-4 w-px bg-gradient-to-b from-amber-500/40 via-orange-500/40 to-red-500/40"/>
+          <div className="space-y-3">{data.steps.steps.map(s => (
+            <div key={s.n} className="relative pl-16">
+              <div className="absolute left-0 top-2 w-12 h-12 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-white font-[Cormorant_Garamond,serif] text-lg shadow-lg">
+                {s.n}
+              </div>
+              <Card className="bg-white/[0.03] border-white/10"><CardContent className="p-5">
+                <div className="flex items-baseline gap-2 flex-wrap">
+                  <span className="font-devanagari text-lg text-amber-300">{s.dev}</span>
+                  <span className="font-[Cormorant_Garamond,serif] text-2xl text-white">{s.name}</span>
+                  <span className="text-slate-400 text-sm italic">— {s.english}</span>
+                </div>
+                <p className="text-slate-200 mt-2 leading-relaxed text-sm">{s.desc}</p>
+              </CardContent></Card>
+            </div>
+          ))}</div>
+        </div>
+
+        <Card className="bg-gradient-to-br from-amber-900/30 to-orange-900/20 border-amber-400/20"><CardContent className="p-6">
+          <div className="text-amber-300 text-xs uppercase tracking-widest mb-2">Simpler Versions for Daily Home Worship</div>
+          <p className="text-slate-200 leading-relaxed">{data.steps.simple_version}</p>
+        </CardContent></Card>
+      </TabsContent>
+
+      {/* MAJOR POOJAS */}
+      <TabsContent value="poojas" className="mt-8 space-y-6">
+        <Card className="bg-white/[0.03] border-white/10"><CardContent className="p-8">
+          <div className="font-devanagari text-2xl text-orange-300">{data.poojas.dev}</div>
+          <p className="text-slate-200 leading-relaxed text-lg mt-3">{data.poojas.intro}</p>
+        </CardContent></Card>
+
+        <h3 className="font-[Cormorant_Garamond,serif] text-2xl text-white text-center">Four Categories of Pooja</h3>
+        <div className="grid md:grid-cols-4 gap-3">{data.poojas.types.map(t => (
+          <Card key={t.name} className="bg-white/[0.03] border-white/10"><CardContent className="p-4">
+            <div className="font-devanagari text-purple-300">{t.dev}</div>
+            <div className="text-white font-semibold">{t.name}</div>
+            <p className="text-slate-300 text-sm mt-2 leading-relaxed">{t.desc}</p>
+          </CardContent></Card>
+        ))}</div>
+
+        <h3 className="font-[Cormorant_Garamond,serif] text-3xl text-white text-center mt-8">Twelve Major Poojas</h3>
+        <div className="space-y-4">{data.poojas.major.map(p => (
+          <Card key={p.id} className="bg-white/[0.03] border-white/10 relative overflow-hidden">
+            <div className={`absolute -top-24 -right-24 w-72 h-72 rounded-full bg-gradient-to-br ${p.color} opacity-20 blur-3xl`}/>
+            <CardContent className="p-6 relative">
+              <div className="flex items-baseline gap-3 flex-wrap">
+                <span className="font-devanagari text-2xl text-white">{p.dev}</span>
+                <h4 className={`font-[Cormorant_Garamond,serif] text-3xl bg-gradient-to-r ${p.color} bg-clip-text text-transparent`}>{p.name}</h4>
+              </div>
+              <div className="text-slate-400 text-xs mt-1">Deity: <span className="text-slate-200">{p.deity}</span></div>
+
+              <div className="grid md:grid-cols-2 gap-3 mt-4">
+                <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-400/20">
+                  <div className="text-amber-300 text-xs uppercase tracking-widest mb-1">When</div>
+                  <p className="text-slate-200 text-sm">{p.when}</p>
+                </div>
+                <div className="p-3 rounded-lg bg-fuchsia-500/10 border border-fuchsia-400/20">
+                  <div className="text-fuchsia-300 text-xs uppercase tracking-widest mb-1">Purpose</div>
+                  <p className="text-slate-200 text-sm">{p.purpose}</p>
+                </div>
+              </div>
+
+              <div className="mt-3 space-y-2">
+                <div><span className="text-emerald-300 text-xs uppercase tracking-widest">Essentials · </span><span className="text-slate-300 text-sm">{p.essentials}</span></div>
+                <div><span className="text-cyan-300 text-xs uppercase tracking-widest">Steps · </span><span className="text-slate-300 text-sm">{p.steps}</span></div>
+              </div>
+
+              <div className="mt-3">
+                <div className="text-purple-300 text-xs uppercase tracking-widest mb-1.5">Mantras</div>
+                <div className="flex flex-wrap gap-2">{p.mantras.map((m, i) => (
+                  <Badge key={i} className="bg-white/[0.05] border-white/10 text-slate-300 text-xs py-1 px-2">{m}</Badge>
+                ))}</div>
+              </div>
+
+              <div className="mt-3 text-slate-400 text-sm italic border-t border-white/5 pt-3">{p.significance}</div>
+            </CardContent>
+          </Card>
+        ))}</div>
+      </TabsContent>
+
+      {/* AARTIS */}
+      <TabsContent value="aartis" className="mt-8 space-y-6">
+        <Card className="bg-white/[0.03] border-white/10"><CardContent className="p-8">
+          <div className="font-devanagari text-2xl text-yellow-300">{data.aartis.dev}</div>
+          <p className="text-slate-200 leading-relaxed text-lg mt-3">{data.aartis.intro}</p>
+        </CardContent></Card>
+
+        <h3 className="font-[Cormorant_Garamond,serif] text-2xl text-white text-center">Five Types of Aarti</h3>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">{data.aartis.types.map(t => (
+          <Card key={t.name} className="bg-white/[0.03] border-white/10"><CardContent className="p-4">
+            <div className="font-devanagari text-lg text-yellow-300">{t.dev}</div>
+            <div className="text-white font-semibold">{t.name}</div>
+            <p className="text-slate-300 text-sm mt-2 leading-relaxed">{t.desc}</p>
+          </CardContent></Card>
+        ))}</div>
+
+        <h3 className="font-[Cormorant_Garamond,serif] text-2xl text-white text-center mt-6">Famous Aartis</h3>
+        <div className="grid md:grid-cols-2 gap-3">{data.aartis.famous_aartis.map(a => (
+          <Card key={a.name} className="bg-white/[0.03] border-white/10"><CardContent className="p-5">
+            <div className="font-[Cormorant_Garamond,serif] text-2xl text-white">{a.name}</div>
+            <div className="text-slate-400 text-xs mt-1">Deity: {a.deity} · By: {a.by}</div>
+            <p className="text-slate-300 text-sm mt-2 leading-relaxed">{a.desc}</p>
+          </CardContent></Card>
+        ))}</div>
+
+        <div className="grid md:grid-cols-2 gap-4 mt-6">
+          <Card className="bg-gradient-to-br from-yellow-900/30 to-orange-900/20 border-yellow-400/20"><CardContent className="p-6">
+            <div className="text-yellow-300 text-xs uppercase tracking-widest mb-2">The Traditional Procedure</div>
+            <p className="text-slate-200 leading-relaxed">{data.aartis.procedure}</p>
+          </CardContent></Card>
+          <Card className="bg-gradient-to-br from-orange-900/30 to-red-900/20 border-orange-400/20"><CardContent className="p-6">
+            <div className="text-orange-300 text-xs uppercase tracking-widest mb-2">The Meaning</div>
+            <p className="text-slate-200 leading-relaxed italic">{data.aartis.meaning}</p>
+          </CardContent></Card>
+        </div>
+      </TabsContent>
+
+      {/* IMPLEMENTS */}
+      <TabsContent value="implements" className="mt-8 space-y-6">
+        <Card className="bg-white/[0.03] border-white/10"><CardContent className="p-8">
+          <div className="font-devanagari text-2xl text-emerald-300">{data.implements.dev}</div>
+          <p className="text-slate-200 leading-relaxed text-lg mt-3">{data.implements.intro}</p>
+        </CardContent></Card>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">{data.implements.items.map(item => (
+          <Card key={item.name} className="bg-white/[0.03] border-white/10"><CardContent className="p-4">
+            <div className="font-devanagari text-lg text-emerald-300">{item.dev}</div>
+            <div className="font-[Cormorant_Garamond,serif] text-xl text-white">{item.name}</div>
+            <p className="text-slate-300 text-sm mt-2 leading-relaxed">{item.purpose}</p>
+          </CardContent></Card>
+        ))}</div>
+      </TabsContent>
+
+      {/* HOMAS */}
+      <TabsContent value="homas" className="mt-8 space-y-6">
+        <Card className="bg-white/[0.03] border-white/10"><CardContent className="p-8">
+          <div className="font-devanagari text-2xl text-orange-300">{data.homas.dev}</div>
+          <p className="text-slate-200 leading-relaxed text-lg mt-3">{data.homas.intro}</p>
+        </CardContent></Card>
+
+        <div className="grid md:grid-cols-2 gap-4">{data.homas.types.map(h => (
+          <Card key={h.name} className="bg-white/[0.03] border-white/10 relative overflow-hidden">
+            <div className={`absolute -top-20 -right-20 w-56 h-56 rounded-full bg-gradient-to-br ${h.color} opacity-20 blur-3xl`}/>
+            <CardContent className="p-6 relative">
+              <div className="flex items-baseline gap-3 flex-wrap">
+                <span className="font-devanagari text-xl text-white">{h.dev}</span>
+                <h4 className={`font-[Cormorant_Garamond,serif] text-2xl bg-gradient-to-r ${h.color} bg-clip-text text-transparent`}>{h.name}</h4>
+              </div>
+              <div className="mt-3 space-y-1.5 text-sm">
+                <div><span className="text-amber-300 uppercase tracking-widest text-xs">When · </span><span className="text-slate-300">{h.when}</span></div>
+                <div><span className="text-fuchsia-300 uppercase tracking-widest text-xs">Purpose · </span><span className="text-slate-300">{h.purpose}</span></div>
+                <div><span className="text-emerald-300 uppercase tracking-widest text-xs">Offerings · </span><span className="text-slate-300">{h.offerings}</span></div>
+                <div><span className="text-cyan-300 uppercase tracking-widest text-xs">Duration · </span><span className="text-slate-300">{h.duration}</span></div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}</div>
+
+        <div className="grid md:grid-cols-2 gap-4 mt-6">
+          <Card className="bg-gradient-to-br from-orange-900/30 to-red-900/20 border-orange-400/20"><CardContent className="p-6">
+            <div className="text-orange-300 text-xs uppercase tracking-widest mb-2">The Fire Altar (Homa Kunda)</div>
+            <p className="text-slate-200 leading-relaxed">{data.homas.fire_structure}</p>
+          </CardContent></Card>
+          <Card className="bg-gradient-to-br from-red-900/30 to-fuchsia-900/20 border-red-400/20"><CardContent className="p-6">
+            <div className="text-red-300 text-xs uppercase tracking-widest mb-2">Every Offering ends with "Swaha"</div>
+            <p className="text-slate-200 leading-relaxed">{data.homas.offering_mantra}</p>
+          </CardContent></Card>
+        </div>
+      </TabsContent>
+
+      {/* DAILY RITUAL */}
+      <TabsContent value="daily" className="mt-8 space-y-6">
+        <Card className="bg-white/[0.03] border-white/10"><CardContent className="p-8">
+          <div className="font-devanagari text-2xl text-amber-300">{data.daily.dev}</div>
+          <p className="text-slate-200 leading-relaxed text-lg mt-3">{data.daily.intro}</p>
+        </CardContent></Card>
+
+        <div className="space-y-3">{data.daily.schedule.map((step, i) => (
+          <Card key={i} className="bg-white/[0.03] border-white/10"><CardContent className="p-5">
+            <div className="grid md:grid-cols-4 gap-4 items-start">
+              <div className="md:col-span-1">
+                <div className="text-amber-300 text-xs uppercase tracking-widest">{step.time}</div>
+                <div className="font-devanagari text-lg text-white mt-1">{step.dev}</div>
+                <div className="font-[Cormorant_Garamond,serif] text-xl text-slate-100">{step.name}</div>
+              </div>
+              <div className="md:col-span-3">
+                <p className="text-slate-200 leading-relaxed">{step.desc}</p>
+              </div>
+            </div>
+          </CardContent></Card>
+        ))}</div>
+
+        <Card className="bg-gradient-to-br from-amber-900/30 to-purple-900/20 border-amber-400/20 mt-6"><CardContent className="p-6">
+          <div className="text-amber-300 text-xs uppercase tracking-widest mb-2">The Five Debts &amp; Five Daily Yajnas</div>
+          <p className="text-slate-200 leading-relaxed">{data.daily.five_debts}</p>
+        </CardContent></Card>
+      </TabsContent>
+    </Tabs>
   </div>);
 }
 
