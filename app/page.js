@@ -352,26 +352,34 @@ function WhyMattersSection() {
 // -------------------- Explore Grid --------------------
 const PAGE_LINKS = [
   { href: '/awakening', title: 'Awakening', devanagari: '\u091C\u093E\u0917\u0930\u0923', desc: 'Complete practices to open the 7 chakras + Vedic body-cosmos correspondences.', color: 'from-fuchsia-500 to-purple-600', Icon: Sparkles },
+  { href: '/explore/vedas', title: 'The Vedic Tree', devanagari: '\u0935\u0947\u0926\u0935\u0943\u0915\u094D\u0937', desc: '4 Vedas, 108 Upanishads, 6 philosophies \u2014 the living library.', color: 'from-amber-400 to-orange-600', Icon: BookOpen },
+  { href: '/explore/nakshatras', title: '27 Nakshatras', devanagari: '\u0928\u0915\u094D\u0937\u0924\u094D\u0930', desc: 'Lunar mansions \u2014 the sky as a cognitive map.', color: 'from-indigo-400 to-purple-500', Icon: Sparkles },
+  { href: '/explore/koshas', title: 'The Five Koshas', devanagari: '\u092A\u0902\u091A \u0915\u094B\u0936', desc: 'Food, breath, mind, wisdom, bliss \u2014 the five sheaths.', color: 'from-cyan-400 to-blue-500', Icon: Heart },
+  { href: '/explore/mythology', title: 'Mythology', devanagari: '\u092A\u0941\u0930\u093E\u0923', desc: 'Gods, ten avatars, and the two epics.', color: 'from-fuchsia-400 to-purple-500', Icon: Users },
+  { href: '/explore/life-mysteries', title: 'Life Mysteries', devanagari: '\u091C\u0940\u0935\u0928 \u0930\u0939\u0938\u094D\u092F', desc: 'Karma, rebirth, 84 lakh yonis, yugas, moksha.', color: 'from-violet-500 to-purple-700', Icon: InfinityIcon },
+  { href: '/explore/festivals', title: 'Festivals & Routes', devanagari: '\u0909\u0924\u094D\u0938\u0935', desc: '10 major festivals and 5 pilgrimage circuits.', color: 'from-amber-500 to-red-500', Icon: Flame },
+  { href: '/explore/lost-civilizations', title: 'Lost & Archived', devanagari: '\u0932\u0941\u092A\u094D\u0924 \u0938\u092D\u094D\u092F\u0924\u093E', desc: 'Vanished civilizations and destroyed sanctuaries.', color: 'from-slate-400 to-purple-500', Icon: Sparkles },
+  { href: '/explore/shop', title: 'Sacred Store', devanagari: '\u0926\u0941\u0915\u093E\u0928', desc: 'Mala, puja kits, homa supplies, meditation tools.', color: 'from-emerald-400 to-teal-500', Icon: Sun },
   { href: '/questions', title: 'Life Questions', devanagari: '\u091C\u0940\u0935\u0928 \u092A\u094D\u0930\u0936\u094D\u0928', desc: '25 deep questions with pre-written 4-perspective answers.', color: 'from-violet-400 to-purple-600', Icon: Compass },
-  { href: '/coach', title: 'AI Life Coach', devanagari: '\u092E\u093E\u0930\u094D\u0917\u0926\u0930\u094D\u0936\u0915', desc: '8 domains: career, stress, relationships, purpose, habits, health.', color: 'from-purple-500 to-fuchsia-600', Icon: Sparkles },
-  { href: '/practices', title: 'Sacred Practices', devanagari: '\u0938\u093E\u0927\u0928\u093E', desc: 'Mala, Deeksha, and the 16-step daily puja explained.', color: 'from-amber-400 to-orange-600', Icon: Flame },
+  { href: '/coach', title: 'AI Life Coach', devanagari: '\u092E\u093E\u0930\u094D\u0917\u0926\u0930\u094D\u0936\u0915', desc: '8 domains: career, stress, relationships, purpose.', color: 'from-purple-500 to-fuchsia-600', Icon: Sparkles },
+  { href: '/practices', title: 'Sacred Practices', devanagari: '\u0938\u093E\u0927\u0928\u093E', desc: 'Mala, Deeksha, and the 16-step daily puja.', color: 'from-amber-400 to-orange-600', Icon: Flame },
   { href: '/yajna', title: 'Yajna & Homa', devanagari: '\u092F\u091C\u094D\u091E \u00B7 \u0939\u094B\u092E', desc: 'The fire ritual \u2014 offering as ancient science.', color: 'from-orange-400 to-red-600', Icon: Flame },
   { href: '/knowledge', title: 'Ancient Knowledge', devanagari: '\u092A\u094D\u0930\u093E\u091A\u0940\u0928 \u091C\u094D\u091E\u093E\u0928', desc: 'Ayurveda, Yoga, Vastu, Sanskrit, Sacred Geometry.', color: 'from-emerald-400 to-teal-600', Icon: InfinityIcon },
-  { href: '/paths', title: 'Learning Paths', devanagari: '\u092E\u093E\u0930\u094D\u0917', desc: 'Beginner \u2192 Intermediate \u2192 Advanced curriculum.', color: 'from-teal-400 to-cyan-600', Icon: ArrowRight },
-  { href: '/daily', title: 'Daily Rhythm', devanagari: '\u0926\u093F\u0928\u091A\u0930\u094D\u092F\u093E', desc: 'The morning to night practice the traditions converge on.', color: 'from-yellow-400 to-amber-600', Icon: Sun },
+  { href: '/paths', title: 'Learning Paths', devanagari: '\u092E\u093E\u0930\u094D\u0917', desc: 'Beginner \u2192 Intermediate \u2192 Advanced.', color: 'from-teal-400 to-cyan-600', Icon: ArrowRight },
+  { href: '/daily', title: 'Daily Rhythm', devanagari: '\u0926\u093F\u0928\u091A\u0930\u094D\u092F\u093E', desc: 'The morning-to-night practice.', color: 'from-yellow-400 to-amber-600', Icon: Sun },
   { href: '/challenges', title: 'Daily Challenges', devanagari: '\u0938\u093E\u0927\u0928\u093E', desc: '7 / 21 / 30 / 40 day guided programs.', color: 'from-fuchsia-500 to-pink-600', Icon: Flame },
-  { href: '/meditate', title: 'Meditation Center', devanagari: '\u0927\u094D\u092F\u093E\u0928', desc: '12 practices with AI-guided scripts and animated timers.', color: 'from-cyan-400 to-blue-600', Icon: Circle },
-  { href: '/map', title: 'World Sacred Sites', devanagari: '\u092E\u0928\u094D\u0926\u093F\u0930', desc: '65+ sites across 6 continents on an interactive map.', color: 'from-teal-400 to-cyan-600', Icon: Globe2 },
+  { href: '/meditate', title: 'Meditation Center', devanagari: '\u0927\u094D\u092F\u093E\u0928', desc: '12 practices with AI-guided scripts.', color: 'from-cyan-400 to-blue-600', Icon: Circle },
+  { href: '/map', title: 'World Sacred Sites', devanagari: '\u092E\u0928\u094D\u0926\u093F\u0930', desc: '65+ sites across 6 continents.', color: 'from-teal-400 to-cyan-600', Icon: Globe2 },
   { href: '/universe', title: 'Universe Explorer', devanagari: '\u092C\u094D\u0930\u0939\u094D\u092E\u093E\u0923\u094D\u0921', desc: 'From Planck length to the observable universe.', color: 'from-indigo-400 to-purple-600', Icon: Sparkles },
   { href: '/timeline', title: 'Cosmic Timeline', devanagari: '\u0915\u093E\u0932\u091A\u0915\u094D\u0930', desc: 'Big Bang to now \u2014 science + wisdom side by side.', color: 'from-purple-400 to-fuchsia-600', Icon: Sparkles },
-  { href: '/books', title: 'Sacred Books', devanagari: '\u0917\u094D\u0930\u0928\u094D\u0925', desc: '15 books across all traditions with AI summaries.', color: 'from-amber-300 to-yellow-600', Icon: BookOpen },
-  { href: '/music', title: 'Sacred Music', devanagari: '\u0928\u093E\u0926', desc: 'Mantras, chants, Tibetan bowls, forest sounds, binaural.', color: 'from-orange-400 to-red-500', Icon: Play },
-  { href: '/journal', title: 'Spiritual Journal', devanagari: '\u0938\u094D\u0935\u093E\u0927\u094D\u092F\u093E\u092F', desc: 'Daily entries with streak tracking. Private on your device.', color: 'from-pink-400 to-rose-600', Icon: Heart },
-  { href: '/community', title: 'Sangha', devanagari: '\u0938\u0902\u0918', desc: 'A community of seekers. Share reflections, no login.', color: 'from-cyan-400 to-blue-500', Icon: Users },
-  { href: '/connected', title: 'Everything Connected', devanagari: '\u0938\u092E\u094D\u092C\u0928\u094D\u0927', desc: 'Type any concept. Follow the thread across all domains.', color: 'from-fuchsia-400 to-pink-600', Icon: Network },
+  { href: '/books', title: 'Sacred Books', devanagari: '\u0917\u094D\u0930\u0928\u094D\u0925', desc: '15 books across all traditions.', color: 'from-amber-300 to-yellow-600', Icon: BookOpen },
+  { href: '/music', title: 'Sacred Music', devanagari: '\u0928\u093E\u0926', desc: 'Mantras, chants, bowls, binaural.', color: 'from-orange-400 to-red-500', Icon: Play },
+  { href: '/journal', title: 'Spiritual Journal', devanagari: '\u0938\u094D\u0935\u093E\u0927\u094D\u092F\u093E\u092F', desc: 'Daily entries with streak tracking.', color: 'from-pink-400 to-rose-600', Icon: Heart },
+  { href: '/community', title: 'Sangha', devanagari: '\u0938\u0902\u0918', desc: 'A community of seekers.', color: 'from-cyan-400 to-blue-500', Icon: Users },
+  { href: '/connected', title: 'Everything Connected', devanagari: '\u0938\u092E\u094D\u092C\u0928\u094D\u0927', desc: 'Type any concept. Follow the thread.', color: 'from-fuchsia-400 to-pink-600', Icon: Network },
   { href: '/body', title: 'Body + Spirit', devanagari: '\u0936\u0930\u0940\u0930', desc: 'Where chakras meet the nervous system.', color: 'from-emerald-400 to-teal-600', Icon: Brain },
   { href: '/mysteries', title: 'World Mysteries', devanagari: '\u0930\u0939\u0938\u094D\u092F', desc: 'Six unresolved questions, honestly framed.', color: 'from-violet-500 to-purple-700', Icon: Sparkles },
-  { href: '/test', title: 'Chakra Balance', devanagari: '\u091A\u0915\u094D\u0930 \u092A\u0930\u0940\u0915\u094D\u0937\u093E', desc: 'Seven-question self-assessment of your energy centers.', color: 'from-violet-400 to-purple-600', Icon: Atom },
+  { href: '/test', title: 'Chakra Balance Test', devanagari: '\u091A\u0915\u094D\u0930 \u092A\u0930\u0940\u0915\u094D\u0937\u093E', desc: 'Seven-question self-assessment.', color: 'from-violet-400 to-purple-600', Icon: Atom },
 ];
 
 function ExploreSection() {
@@ -379,9 +387,9 @@ function ExploreSection() {
     <section className="py-24 px-6 relative">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
-          <Badge className="bg-purple-500/20 border-purple-300/30 text-purple-100 uppercase tracking-[0.25em] text-[10px]">Explore Turiya</Badge>
-          <div className="font-devanagari text-2xl text-purple-300 mt-4">एकविंशति द्वार</div>
-          <h2 className="font-[Cormorant_Garamond,serif] text-4xl md:text-6xl mt-3 text-white">Twenty-one doorways.</h2>
+          <Badge className="bg-purple-500/20 border-purple-300/30 text-purple-100 uppercase tracking-[0.25em] text-[10px]">Explore Chaitava</Badge>
+          <div className="font-devanagari text-2xl text-purple-300 mt-4">एकोनत्रिंशत् द्वार</div>
+          <h2 className="font-[Cormorant_Garamond,serif] text-4xl md:text-6xl mt-3 text-white">Twenty-nine doorways.</h2>
           <p className="text-slate-400 mt-3">Choose one. Return tomorrow. The doorway will have deepened.</p>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -429,7 +437,7 @@ function App() {
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/5 text-xs uppercase tracking-[0.3em] text-purple-200">
             <Sun size={12}/> Where science meets spirituality
           </div>
-          <div className="font-devanagari text-2xl md:text-3xl text-purple-200/70 mt-8">तुरीय · सत्यं ज्ञानम् अनन्तं ब्रह्म</div>
+          <div className="font-devanagari text-2xl md:text-3xl text-purple-200/70 mt-8">चैतव · चैतन्यं ब्रह्म</div>
           <h1 className="font-[Cormorant_Garamond,serif] text-5xl md:text-7xl lg:text-8xl mt-4 leading-[1.05] text-white">
             Ancient wisdom.<br/><span className="bg-gradient-to-r from-amber-200 via-fuchsia-300 to-purple-300 bg-clip-text text-transparent">Modern science.</span><br/>Every human question.
           </h1>
@@ -515,8 +523,8 @@ function App() {
 
       {/* Footer */}
       <footer className="py-10 px-6 border-t border-white/5 text-center text-slate-500 text-sm">
-          <div className="font-[Cormorant_Garamond,serif] text-2xl tracking-wide text-white/70 mb-2">Turiya</div>
-        <div className="text-slate-500 text-xs mb-2 italic">तुरीय · The fourth state of consciousness</div>
+          <div className="font-[Cormorant_Garamond,serif] text-2xl tracking-wide text-white/70 mb-2">Chaitava</div>
+        <div className="text-slate-500 text-xs mb-2 italic">चैतव · The awakened consciousness</div>
         <div>Balanced perspectives on the questions that matter most. AI-assisted, human-curated.</div>
       </footer>
     </div>

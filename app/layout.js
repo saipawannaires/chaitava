@@ -3,8 +3,8 @@ import { Providers } from './providers'
 import Starfield from '@/components/starfield'
 
 export const metadata = {
-  title: 'Turiya — Where Science Meets Spirituality',
-  description: 'Ancient wisdom, modern science, and every human question — answered with four honest perspectives.',
+  title: 'Chaitava — Where Science Meets Spirituality',
+  description: 'चैतव · Ancient wisdom, modern science, and every human question — answered with four honest perspectives.',
 }
 
 export default function RootLayout({ children }) {
