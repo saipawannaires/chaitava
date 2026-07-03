@@ -5,18 +5,21 @@ import { Button } from '@/components/ui/button';
 
 const LINKS = [
   { href: '/questions', label: 'Questions' },
+  { href: '/coach', label: 'Coach' },
   { href: '/practices', label: 'Practices' },
+  { href: '/yajna', label: 'Yajna' },
   { href: '/knowledge', label: 'Ancient' },
   { href: '/paths', label: 'Paths' },
   { href: '/daily', label: 'Daily' },
   { href: '/challenges', label: 'Challenges' },
   { href: '/meditate', label: 'Meditate' },
   { href: '/map', label: 'Map' },
+  { href: '/universe', label: 'Universe' },
   { href: '/timeline', label: 'Cosmos' },
   { href: '/books', label: 'Books' },
   { href: '/music', label: 'Music' },
   { href: '/journal', label: 'Journal' },
-  { href: '/mysteries', label: 'Mysteries' },
+  { href: '/community', label: 'Community' },
 ];
 
 export default function SiteNav() {

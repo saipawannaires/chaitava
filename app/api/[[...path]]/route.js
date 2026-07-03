@@ -5,6 +5,7 @@ import { WHY_CARDS, MALA, DEEKSHA, PUJA_VIDHANAM, COSMIC_TIMELINE, MEDITATIONS, 
 import { LIFE_QUESTIONS, WORLD_TEMPLES, SACRED_MUSIC } from '@/lib/content-extra';
 import { ANCIENT_KNOWLEDGE, LEARNING_PATHS, DAILY_PRACTICES, CHALLENGES, MYSTERIES } from '@/lib/content-more';
 import { MORE_LIFE_QUESTIONS, MORE_TEMPLES, MORE_BOOKS, MORE_MEDITATIONS } from '@/lib/content-expand';
+import { COACH_DOMAINS, YAJNA, UNIVERSE_SCALES } from '@/lib/content-final';
 
 // Merge expansions
 const ALL_QUESTIONS = [...LIFE_QUESTIONS, ...MORE_LIFE_QUESTIONS];
@@ -130,6 +131,36 @@ async function handler(request, context) {
     if (method === 'GET' && path === 'daily-practices') return NextResponse.json(DAILY_PRACTICES);
     if (method === 'GET' && path === 'challenges') return NextResponse.json({ challenges: CHALLENGES });
     if (method === 'GET' && path === 'mysteries') return NextResponse.json({ mysteries: MYSTERIES });
+    if (method === 'GET' && path === 'coach-domains') return NextResponse.json({ domains: COACH_DOMAINS.map(d => ({ id: d.id, name: d.name, color: d.color, icon: d.icon, tagline: d.tagline })) });
+    if (method === 'GET' && path === 'yajna') return NextResponse.json(YAJNA);
+    if (method === 'GET' && path === 'universe') return NextResponse.json({ scales: UNIVERSE_SCALES });
+
+    // Community: anonymous public reflections
+    if (method === 'GET' && path === 'community') {
+      try {
+        const items = await (await db()).collection('community_posts').find({}).sort({ createdAt: -1 }).limit(50).toArray();
+        return NextResponse.json({ posts: items.map(p => ({ id: p.id, alias: p.alias, topic: p.topic, text: p.text, createdAt: p.createdAt })) });
+      } catch { return NextResponse.json({ posts: [] }); }
+    }
+    if (method === 'POST' && path === 'community') {
+      const { alias, topic, text } = await readBody(request);
+      if (!text || text.length < 5) return NextResponse.json({ error: 'text required' }, { status: 400 });
+      const post = { id: uuidv4(), alias: (alias || 'Seeker').slice(0, 40), topic: (topic || 'reflection').slice(0, 40), text: text.slice(0, 2000), createdAt: new Date() };
+      try { await (await db()).collection('community_posts').insertOne(post); } catch {}
+      return NextResponse.json({ ok: true, post });
+    }
+
+    // AI Life Coach
+    if (method === 'POST' && path === 'coach') {
+      const { domain_id, message, history = [] } = await readBody(request);
+      const d = COACH_DOMAINS.find(x => x.id === domain_id);
+      if (!d || !message) return NextResponse.json({ error: 'invalid input' }, { status: 400 });
+      const system = d.prompt + '\n\nGuidelines: 3-5 short paragraphs. Warm, direct, actionable. End with ONE specific micro-step for today. Never give medical/legal/financial specifics \u2014 point toward professionals when needed.';
+      const msgs = [{ role: 'system', content: system }, ...history.slice(-6).filter(h => ['user', 'assistant'].includes(h.role)).map(h => ({ role: h.role, content: String(h.content).slice(0, 3000) })), { role: 'user', content: String(message).slice(0, 3000) }];
+      const reply = await callLLM(msgs, { max_tokens: 900, temperature: 0.75 });
+      try { await (await db()).collection('coach_chats').insertOne({ id: uuidv4(), domain_id, message, reply, createdAt: new Date() }); } catch {}
+      return NextResponse.json({ reply, domain: { id: d.id, name: d.name } });
+    }
 
     if (method === 'POST' && path === 'guru') {
       const { question } = await readBody(request);
