@@ -7,6 +7,7 @@ import { ANCIENT_KNOWLEDGE, LEARNING_PATHS, DAILY_PRACTICES, CHALLENGES, MYSTERI
 import { MORE_LIFE_QUESTIONS, MORE_TEMPLES, MORE_BOOKS, MORE_MEDITATIONS } from '@/lib/content-expand';
 import { COACH_DOMAINS, YAJNA, UNIVERSE_SCALES } from '@/lib/content-final';
 import { CHAKRA_OPENING, VEDIC_BODY_COSMOS, MORE_TEMPLES_V2 } from '@/lib/content-v2';
+import { VEDIC_TREE, NAKSHATRAS, KOSHAS, MYTHOLOGY, LIFE_MYSTERIES, FESTIVALS, PILGRIMAGE_ROUTES, LOST_CIVILIZATIONS, ARCHIVED_TEMPLES, SHOP_ITEMS } from '@/lib/content-mega';
 
 // Merge expansions
 const ALL_QUESTIONS = [...LIFE_QUESTIONS, ...MORE_LIFE_QUESTIONS];
@@ -137,6 +138,14 @@ async function handler(request, context) {
     if (method === 'GET' && path === 'universe') return NextResponse.json({ scales: UNIVERSE_SCALES });
     if (method === 'GET' && path === 'chakras') return NextResponse.json({ chakras: CHAKRA_OPENING });
     if (method === 'GET' && path === 'vedic-cosmos') return NextResponse.json(VEDIC_BODY_COSMOS);
+    if (method === 'GET' && path === 'vedas') return NextResponse.json(VEDIC_TREE);
+    if (method === 'GET' && path === 'nakshatras') return NextResponse.json({ nakshatras: NAKSHATRAS });
+    if (method === 'GET' && path === 'koshas') return NextResponse.json({ koshas: KOSHAS });
+    if (method === 'GET' && path === 'mythology') return NextResponse.json(MYTHOLOGY);
+    if (method === 'GET' && path === 'life-mysteries') return NextResponse.json({ items: LIFE_MYSTERIES });
+    if (method === 'GET' && path === 'festivals') return NextResponse.json({ festivals: FESTIVALS, routes: PILGRIMAGE_ROUTES });
+    if (method === 'GET' && path === 'lost-civilizations') return NextResponse.json({ civilizations: LOST_CIVILIZATIONS, archived: ARCHIVED_TEMPLES });
+    if (method === 'GET' && path === 'shop') return NextResponse.json({ items: SHOP_ITEMS });
 
     // Community: anonymous public reflections
     if (method === 'GET' && path === 'community') {
