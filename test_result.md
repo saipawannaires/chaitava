@@ -153,3 +153,9 @@ agent_communication:
   - agent: "main"
     message: |
       Added Rituals of Pooja (/explore/rituals) with 6-tab structure: 16 Upacharas (Shodashopachara), 12 Major Poojas (Ganesha, Lakshmi, Rudrabhisheka, Satyanarayana, Navagraha, Chandi Homa, Ayush Homa, Griha Pravesha, Sudarshana, Kaal Sarpa, Shraddha, Kalasha Sthapana — each with deity, when, purpose, essentials, mantras, steps, significance), 5 types of Aarti + famous aartis, 18 Pooja Implements (Kalasha, Panchapatra, Deepa, Shankha, Rudraksha, etc.), 9 Homas (Ganapati, Mrityunjaya, Sudarshana, Chandi, Ayush, Navagraha, Rudra, Ati-Rudra, Somayajna), and complete Daily Ritual schedule with the Five Debts framework. Home grid now 39 doorways. API /api/rituals returns 200, page verified via screenshots.
+  - agent: "main"
+    message: |
+      CONTEST-STRATEGY PIVOT — Built the Knowledge Universe at /discover as the flagship hero feature. Interactive radial navigation: click any concept-planet, it becomes the new center, revealing its unique orbit of connected concepts. 29 nodes across 9 domains (Mind, Body, Practice, Cosmos, Spirit, Life, Method, Principle, Origin) with full 5-perspective content (Overview, Scientific, Spiritual, Philosophical, Historical) + One Practice to Try Today + Related pills for jumping.
+      Also applied the new CHAITAVA AI system prompt to /api/guru with expanded response format (adds "related" concepts array and "action" daily-action field).
+      Created /app/memory/PRD.md (master spec) and /app/memory/chaitava_ai_system_prompt.md (AI behavior spec) for long-term project management.
+      Home hero now leads with "Enter the Knowledge Universe" (primary gradient button linking to /discover). Both /discover load and navigation between planets verified via screenshots.

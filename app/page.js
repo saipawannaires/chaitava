@@ -452,7 +452,8 @@ function App() {
           </h1>
           <p className="mt-6 text-lg md:text-xl text-slate-300/90 max-w-2xl mx-auto">Who am I? Why do I suffer? What is consciousness? Get four honest perspectives on the questions that matter most.</p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <a href="#guru"><Button size="lg" className="bg-gradient-to-r from-purple-500 via-fuchsia-500 to-pink-500 shadow-2xl shadow-fuchsia-500/25"><Sparkles size={16} className="mr-2"/>Ask the Guru</Button></a>
+            <Link href="/discover"><Button size="lg" className="bg-gradient-to-r from-amber-400 via-fuchsia-500 to-purple-500 shadow-2xl shadow-fuchsia-500/25 text-white"><Compass size={16} className="mr-2"/>Enter the Knowledge Universe</Button></Link>
+            <a href="#guru"><Button size="lg" variant="outline" className="border-white/15 bg-white/5 hover:bg-white/10 text-white"><Sparkles size={16} className="mr-2"/>Ask the AI Guru</Button></a>
             <a href="#masters"><Button size="lg" variant="outline" className="border-white/15 bg-white/5 hover:bg-white/10 text-white">Meet the Masters</Button></a>
           </div>
         </div>
