@@ -159,3 +159,11 @@ agent_communication:
       Also applied the new CHAITAVA AI system prompt to /api/guru with expanded response format (adds "related" concepts array and "action" daily-action field).
       Created /app/memory/PRD.md (master spec) and /app/memory/chaitava_ai_system_prompt.md (AI behavior spec) for long-term project management.
       Home hero now leads with "Enter the Knowledge Universe" (primary gradient button linking to /discover). Both /discover load and navigation between planets verified via screenshots.
+
+  - agent: "main"
+    message: |
+      KNOWLEDGE UNIVERSE v2 — Now INFINITE.
+      1) Expanded static nodes: 29 → 77 (added Religions: Hinduism/Buddhism/Christianity/Islam/Judaism/Sikhism/Taoism/Jainism/Sufism/Stoicism/Zen; Sciences: Evolution/DNA/Atom/Gravity/Blackholes/Neurons/Neuroplasticity/Microbiome; Anatomy: Heart/Vagus/Kundalini/Nadis; Practices: Mudras/Mantras/Sound Healing/Sacred Geometry; Emotions: Gratitude/Fear/Ego/Compassion/Purpose/Flow; Scriptures: Vedas/Upanishads/Gita/Dhammapada/Tao Te Ching; Relationships: Family/Community/Service/Krishna; Fringe: Reiki/Psychedelics/NDE; Bridges: Ayurveda/Nature/Ecology).
+      2) AI-generated node expansion: new POST /api/expand-node — user types any concept (e.g. "forgiveness", "moon", "silence"), Claude generates a full 5-perspective node (id, name, dev, tagline, domain, color, scientific, spiritual, philosophical, historical, practice, related[]) added live to the universe. Verified working.
+      3) UI/UX polish on /discover: search bar with ⌘K shortcut, smooth transitions between planets, breadcrumb trail showing full journey, back/home buttons, star field background, orbit-in animations, glow on center planet, hover scale on orbit planets, mobile-responsive.
+      4) System prompt aligned throughout.

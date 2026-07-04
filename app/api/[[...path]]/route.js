@@ -161,6 +161,34 @@ async function handler(request, context) {
       steps: POOJA_STEPS, poojas: POOJAS, aartis: AARTIS, implements: PUJA_IMPLEMENTS, homas: HOMAS, daily: DAILY_RITUAL
     });
 
+    if (method === 'POST' && path === 'expand-node') {
+      const { concept, context } = await readBody(request);
+      if (!concept) return NextResponse.json({ error: 'concept required' }, { status: 400 });
+      const system = `You are CHAITAVA AI generating a new concept-planet in the Knowledge Universe. The user has typed a concept. Return STRICT JSON only — no markdown, no code fences — with keys:
+{
+  "id": "kebab-case-id (lowercase, no spaces)",
+  "name": "The concept in English (Title Case)",
+  "dev": "Devanagari or original-language name if applicable, else empty string",
+  "tagline": "A poetic one-line description (max 12 words)",
+  "domain": "one of: mind, body, practice, cosmos, spirit, life, method, principle",
+  "color": "Tailwind gradient e.g. 'from-cyan-400 to-purple-600' — pick colors that reflect the domain",
+  "scientific": "4-6 sentences. Cite specific studies/researchers where relevant. Mention uncertainty.",
+  "spiritual": "4-6 sentences drawing from multiple traditions (name at least 2-3).",
+  "philosophical": "3-5 sentences naming specific thinkers.",
+  "historical": "3-5 sentences on how humans have wrestled with this.",
+  "practice": "One small practical thing the reader can try today (2-3 sentences).",
+  "related": ["array of 5-7 related concepts as kebab-case ids from this list: consciousness, meditation, brain, breath, self, suffering, love, universe, time, quantum, multiverse, earth, god, temples, religion, karma, body, chakras, yoga, prana, aura, life, death, science, connection, hinduism, buddhism, christianity, islam, judaism, sikhism, taoism, jainism, sufism, stoicism, zen, evolution, dna, atom, gravity, blackhole, neurons, neuroplasticity, microbiome, heart, vagus, kundalini, nadis, mudras, mantras, sound, sacredgeometry, gratitude, fear, ego, compassion, purpose, flow, vedas, upanishads, gita, dhammapada, tao_te_ching, family, community, service, krishna, reiki, psychedelics, neardeath, ayurveda, nature, ecology, stress, sleep, dreams — pick the most genuinely related ones]"
+}
+
+Be honest, balanced, respectful of all traditions. Never claim beliefs are science. Everything is Connected.`;
+      const userMsg = `Concept to explore: "${concept.trim()}"${context ? `\nContext: ${context}` : ''}`;
+      const raw = await callLLM([{ role: 'system', content: system }, { role: 'user', content: userMsg }], { max_tokens: 1800 });
+      let parsed;
+      try { parsed = JSON.parse(raw.slice(raw.indexOf('{'), raw.lastIndexOf('}') + 1)); }
+      catch { return NextResponse.json({ error: 'parse_error', raw }, { status: 500 }); }
+      return NextResponse.json(parsed);
+    }
+
     // Community: anonymous public reflections
     if (method === 'GET' && path === 'community') {
       try {
