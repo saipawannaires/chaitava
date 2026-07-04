@@ -1,41 +1,40 @@
 'use client';
 import Link from 'next/link';
-import { Sparkles, ArrowRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { usePathname } from 'next/navigation';
+import { Home, Sparkles, Compass, User } from 'lucide-react';
 
-const LINKS = [
-  { href: '/awakening', label: 'Awakening' },
-  { href: '/questions', label: 'Questions' },
-  { href: '/coach', label: 'Coach' },
-  { href: '/practices', label: 'Practices' },
-  { href: '/yajna', label: 'Yajna' },
-  { href: '/knowledge', label: 'Ancient' },
-  { href: '/paths', label: 'Paths' },
-  { href: '/daily', label: 'Daily' },
-  { href: '/challenges', label: 'Challenges' },
-  { href: '/meditate', label: 'Meditate' },
-  { href: '/map', label: 'Map' },
-  { href: '/universe', label: 'Universe' },
-  { href: '/timeline', label: 'Cosmos' },
-  { href: '/books', label: 'Books' },
-  { href: '/music', label: 'Music' },
-  { href: '/community', label: 'Sangha' },
+const TABS = [
+  { href: '/', label: 'Home', icon: Home, match: (p) => p === '/' },
+  { href: '/discover', label: 'Universe', icon: Compass, match: (p) => p === '/discover' || p.startsWith('/universe') || p.startsWith('/explore') || p.startsWith('/timeline') || p.startsWith('/map') || p.startsWith('/cosmos') || p.startsWith('/ancient') || p.startsWith('/awakening') || p.startsWith('/body') || p.startsWith('/knowledge') || p.startsWith('/connected') },
+  { href: '/ai', label: 'AI', icon: Sparkles, match: (p) => p === '/ai' || p.startsWith('/coach') || p.startsWith('/masters') || p.startsWith('/questions') },
+  { href: '/journey', label: 'Journey', icon: User, match: (p) => p === '/journey' || p.startsWith('/meditate') || p.startsWith('/practices') || p.startsWith('/journal') || p.startsWith('/daily') || p.startsWith('/challenges') || p.startsWith('/paths') || p.startsWith('/community') || p.startsWith('/books') || p.startsWith('/music') },
 ];
 
 export default function SiteNav() {
+  const path = usePathname() || '/';
   return (
-    <nav className="sticky top-0 z-40 backdrop-blur-xl bg-[#0a0416]/70 border-b border-white/5">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
-        <Link href="/" className="flex items-center gap-2 shrink-0">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 via-fuchsia-500 to-amber-400 flex items-center justify-center"><Sparkles size={16} className="text-white"/></div>
-          <div className="font-[Cormorant_Garamond,serif] text-2xl tracking-wide text-white">Chaitava</div>
-        </Link>
-        <div className="hidden lg:flex gap-5 text-sm text-slate-300 overflow-x-auto">
-          {LINKS.map((l) => (
-            <Link key={l.href} href={l.href} className="hover:text-white whitespace-nowrap">{l.label}</Link>
-          ))}
+    <nav className="fixed top-0 inset-x-0 z-40">
+      <div className="mx-auto max-w-6xl px-4 pt-4">
+        <div className="glass-strong rounded-full px-4 py-2.5 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2.5 shrink-0">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#D4AF37] via-fuchsia-400 to-purple-500 flex items-center justify-center shadow-lg shadow-amber-500/20">
+              <span className="text-black font-serif text-lg leading-none">✵</span>
+            </div>
+            <div className="font-serif text-[19px] tracking-tight text-white">Chaitava</div>
+          </Link>
+          <div className="flex items-center gap-1">
+            {TABS.map(t => {
+              const active = t.match(path);
+              const Icon = t.icon;
+              return (
+                <Link key={t.href} href={t.href}
+                  className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-sm transition-all ${active ? 'bg-white text-black' : 'text-slate-300 hover:text-white hover:bg-white/[0.06]'}`}>
+                  <Icon size={14}/> <span>{t.label}</span>
+                </Link>
+              );
+            })}
+          </div>
         </div>
-        <Link href="/#guru"><Button size="sm" className="bg-gradient-to-r from-purple-500 to-fuchsia-500 shrink-0">Ask AI <ArrowRight size={14} className="ml-1"/></Button></Link>
       </div>
     </nav>
   );

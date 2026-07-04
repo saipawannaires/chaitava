@@ -1,543 +1,138 @@
 'use client';
-
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import SiteNav from '@/components/site-nav';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Textarea } from '@/components/ui/textarea';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Sparkles, Sun, Moon, Play, Pause, RotateCcw, Send, ArrowRight, Flower2, Atom, BookOpen, Globe2, Heart, Loader2, Brain, Infinity as InfinityIcon, Network, Flame, Circle, Hand, Users, Compass } from 'lucide-react';
+import CosmicBg from '@/components/cosmic-bg';
+import { Search, ArrowRight, Compass, Sparkles, User, BookOpen } from 'lucide-react';
 
-const HERO_BG = 'https://images.unsplash.com/photo-1610209455607-89e8b3e0e393?auto=format&fit=crop&w=2000&q=80';
-const COSMOS_BG = 'https://images.pexels.com/photos/956999/milky-way-starry-sky-night-sky-star-956999.jpeg?auto=compress&cs=tinysrgb&w=2000';
-const SACRED_GEO = 'https://images.unsplash.com/photo-1629275622835-f42d081fe666?auto=format&fit=crop&w=1200&q=80';
-
-const PERSPECTIVE_META = [
-  { key: 'scientific', label: 'Scientific', icon: Atom, color: 'from-cyan-400 to-blue-500', hint: 'What the evidence says' },
-  { key: 'spiritual', label: 'Spiritual', icon: Flower2, color: 'from-fuchsia-400 to-purple-500', hint: 'What the traditions teach' },
-  { key: 'philosophical', label: 'Philosophical', icon: BookOpen, color: 'from-amber-300 to-orange-500', hint: 'What thinkers argue' },
-  { key: 'historical', label: 'Historical', icon: Globe2, color: 'from-emerald-300 to-teal-500', hint: 'How humans have understood it' },
-];
-
-const SAMPLE_QUESTIONS = [
-  'Who am I?',
-  'Why do I suffer?',
+const SUGGESTIONS = [
   'What is consciousness?',
-  'Does God exist?',
+  'Why do we suffer?',
   'What happens after death?',
-  'Why do religions differ?',
-  'How can science and spirituality coexist?',
+  'How does meditation change the brain?',
+  'What is the meaning of the Bhagavad Gita?',
+  'What are chakras really?',
 ];
 
-// -------------------- Meditation Timer --------------------
-function MeditationTimer() {
-  const [duration, setDuration] = useState(300); // 5 min
-  const [remaining, setRemaining] = useState(300);
-  const [running, setRunning] = useState(false);
-  const intRef = useRef(null);
+function App() {
+  const router = useRouter();
+  const [q, setQ] = useState('');
+  const [placeholderIdx, setPlaceholderIdx] = useState(0);
+  const inputRef = useRef(null);
 
   useEffect(() => {
-    if (!running) return;
-    intRef.current = setInterval(() => {
-      setRemaining((r) => {
-        if (r <= 1) { clearInterval(intRef.current); setRunning(false); return 0; }
-        return r - 1;
-      });
-    }, 1000);
-    return () => clearInterval(intRef.current);
-  }, [running]);
+    const iv = setInterval(() => setPlaceholderIdx(i => (i + 1) % SUGGESTIONS.length), 3500);
+    return () => clearInterval(iv);
+  }, []);
 
-  const mm = String(Math.floor(remaining / 60)).padStart(2, '0');
-  const ss = String(remaining % 60).padStart(2, '0');
-  const pct = duration ? ((duration - remaining) / duration) * 100 : 0;
-
-  return (
-    <Card className="bg-white/[0.03] backdrop-blur border-white/10 relative overflow-hidden">
-      <div className="absolute inset-0 opacity-30" style={{ background: `radial-gradient(circle at 50% 50%, rgba(168,85,247,0.35), transparent 60%)` }} />
-      <CardContent className="p-6 relative">
-        <div className="flex items-center gap-2 text-purple-200/80 text-xs uppercase tracking-[0.2em] mb-4"><Moon size={14}/> Meditation</div>
-        <div className="flex items-center justify-center my-4">
-          <div className="relative w-40 h-40">
-            <svg viewBox="0 0 100 100" className="w-full h-full -rotate-90">
-              <circle cx="50" cy="50" r="46" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="3"/>
-              <circle cx="50" cy="50" r="46" fill="none" stroke="url(#g)" strokeWidth="3" strokeLinecap="round" strokeDasharray={2 * Math.PI * 46} strokeDashoffset={2 * Math.PI * 46 * (1 - pct / 100)} />
-              <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#c084fc"/><stop offset="100%" stopColor="#f0abfc"/></linearGradient></defs>
-            </svg>
-            <div className="absolute inset-0 flex items-center justify-center font-[Cormorant_Garamond,serif] text-4xl">{mm}:{ss}</div>
-          </div>
-        </div>
-        <div className="flex justify-center gap-2 mb-3">
-          {[3, 5, 10, 15, 20].map((m) => (
-            <button key={m} onClick={() => { setDuration(m*60); setRemaining(m*60); setRunning(false); }}
-              className={`px-2.5 py-1 rounded-full text-xs border ${duration === m*60 ? 'bg-purple-500/30 border-purple-300/50 text-white' : 'border-white/10 text-slate-300 hover:bg-white/5'}`}>{m}m</button>
-          ))}
-        </div>
-        <div className="flex justify-center gap-2">
-          <Button size="sm" onClick={() => setRunning((r) => !r)} className="bg-gradient-to-r from-purple-500 to-fuchsia-500 hover:opacity-90">
-            {running ? <><Pause size={14} className="mr-1"/>Pause</> : <><Play size={14} className="mr-1"/>Begin</>}
-          </Button>
-          <Button size="sm" variant="outline" onClick={() => { setRunning(false); setRemaining(duration); }} className="border-white/15 bg-transparent"><RotateCcw size={14} className="mr-1"/>Reset</Button>
-        </div>
-      </CardContent>
-    </Card>
-  );
-}
-
-// -------------------- Guru Panel --------------------
-function GuruPanel() {
-  const [question, setQuestion] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [answer, setAnswer] = useState(null);
-  const [error, setError] = useState('');
-
-  async function ask(q) {
-    const query = (q || question).trim();
-    if (!query) return;
-    setQuestion(query);
-    setLoading(true);
-    setError('');
-    setAnswer(null);
-    try {
-      const res = await fetch('/api/guru', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ question: query }) });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Failed');
-      setAnswer(data);
-    } catch (e) {
-      setError(e.message);
-    } finally {
-      setLoading(false);
-    }
+  function submit(e) {
+    e?.preventDefault();
+    if (!q.trim()) return;
+    router.push(`/ai?q=${encodeURIComponent(q.trim())}`);
   }
 
   return (
-    <div id="guru" className="space-y-6">
-      <div className="text-center max-w-2xl mx-auto">
-        <Badge className="bg-purple-500/20 border-purple-300/30 text-purple-100 uppercase tracking-[0.25em] text-[10px]">AI Spiritual Guru</Badge>
-        <h2 className="font-[Cormorant_Garamond,serif] text-4xl md:text-5xl mt-4 text-white">Ask any question that keeps you awake.</h2>
-        <p className="text-slate-300/80 mt-3">Get four honest perspectives — <span className="text-cyan-300">Scientific</span>, <span className="text-fuchsia-300">Spiritual</span>, <span className="text-amber-300">Philosophical</span>, <span className="text-emerald-300">Historical</span> — and decide for yourself.</p>
-      </div>
-
-      <Card className="bg-white/[0.04] backdrop-blur-xl border-white/10 max-w-3xl mx-auto">
-        <CardContent className="p-5">
-          <Textarea value={question} onChange={(e) => setQuestion(e.target.value)} placeholder="e.g. What is consciousness? Why do I suffer? Does God exist?" rows={3}
-            className="bg-transparent border-white/10 text-lg font-[Cormorant_Garamond,serif] placeholder:text-slate-500 focus-visible:ring-purple-400/40"/>
-          <div className="flex flex-wrap items-center gap-2 mt-3">
-            {SAMPLE_QUESTIONS.map((s) => (
-              <button key={s} onClick={() => ask(s)} className="text-xs px-3 py-1.5 rounded-full border border-white/10 text-slate-300 hover:bg-white/5">{s}</button>
-            ))}
-            <div className="flex-1" />
-            <Button onClick={() => ask()} disabled={loading} className="bg-gradient-to-r from-purple-500 via-fuchsia-500 to-pink-500 hover:opacity-90">
-              {loading ? <><Loader2 className="animate-spin mr-2" size={16}/>Contemplating…</> : <><Sparkles size={16} className="mr-2"/>Ask</>}
-            </Button>
-          </div>
-          {error && <div className="mt-3 text-red-300 text-sm">{error}</div>}
-        </CardContent>
-      </Card>
-
-      {answer && (
-        <div className="max-w-5xl mx-auto space-y-6">
-          <div className="text-center">
-            <div className="text-slate-400 text-sm uppercase tracking-widest">Question</div>
-            <div className="font-[Cormorant_Garamond,serif] text-2xl md:text-3xl text-white mt-1">{answer.question}</div>
-          </div>
-          <div className="grid md:grid-cols-2 gap-4">
-            {PERSPECTIVE_META.map(({ key, label, icon: Icon, color, hint }) => (
-              <Card key={key} className="bg-white/[0.03] border-white/10 backdrop-blur relative overflow-hidden">
-                <div className={`absolute -top-16 -right-16 w-40 h-40 rounded-full bg-gradient-to-br ${color} opacity-20 blur-2xl`} />
-                <CardContent className="p-5 relative">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${color} flex items-center justify-center`}><Icon size={16} className="text-white"/></div>
-                    <div>
-                      <div className="font-semibold text-white">{label} View</div>
-                      <div className="text-xs text-slate-400">{hint}</div>
-                    </div>
-                  </div>
-                  <p className="text-slate-200/90 leading-relaxed whitespace-pre-line">{answer[key] || '—'}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-          {answer.synthesis && (
-            <Card className="bg-gradient-to-br from-purple-900/40 to-fuchsia-900/20 border-purple-400/20">
-              <CardContent className="p-6 text-center">
-                <div className="text-purple-200 uppercase tracking-widest text-xs mb-2">A Humble Synthesis</div>
-                <p className="font-[Cormorant_Garamond,serif] text-xl md:text-2xl text-white leading-snug">{answer.synthesis}</p>
-              </CardContent>
-            </Card>
-          )}
-          {answer.reflection && (
-            <div className="text-center text-slate-300 italic max-w-2xl mx-auto">
-              <Heart size={16} className="inline mr-2 text-pink-300"/>Sit with this: <span className="text-white">{answer.reflection}</span>
-            </div>
-          )}
-        </div>
-      )}
-    </div>
-  );
-}
-
-// -------------------- Great Masters --------------------
-function MastersPanel() {
-  const [masters, setMasters] = useState([]);
-  const [active, setActive] = useState(null);
-  const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState('');
-  const [loading, setLoading] = useState(false);
-  const sessionRef = useRef(null);
-
-  useEffect(() => { fetch('/api/masters').then((r) => r.json()).then((d) => setMasters(d.masters || [])); }, []);
-
-  function openMaster(m) {
-    setActive(m);
-    setMessages([]);
-    sessionRef.current = null;
-  }
-
-  async function send() {
-    const text = input.trim();
-    if (!text || loading) return;
-    setLoading(true);
-    const nextMessages = [...messages, { role: 'user', content: text }];
-    setMessages(nextMessages);
-    setInput('');
-    try {
-      const res = await fetch('/api/master', {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ master_id: active.id, message: text, history: messages, session_id: sessionRef.current }),
-      });
-      const data = await res.json();
-      sessionRef.current = data.session_id;
-      setMessages([...nextMessages, { role: 'assistant', content: data.reply }]);
-    } catch (e) {
-      setMessages([...nextMessages, { role: 'assistant', content: 'The master is momentarily silent. Please try again.' }]);
-    } finally { setLoading(false); }
-  }
-
-  const gradients = ['from-amber-500 to-orange-600','from-cyan-500 to-blue-600','from-emerald-500 to-teal-600','from-fuchsia-500 to-pink-600','from-purple-500 to-indigo-600','from-yellow-400 to-amber-600'];
-
-  return (
-    <div id="masters">
-      <div className="text-center max-w-2xl mx-auto mb-8">
-        <Badge className="bg-amber-500/20 border-amber-300/30 text-amber-100 uppercase tracking-[0.25em] text-[10px]">Ask the Great Masters</Badge>
-        <h2 className="font-[Cormorant_Garamond,serif] text-4xl md:text-5xl mt-4 text-white">Sit at the feet of the wise.</h2>
-        <p className="text-slate-300/80 mt-3">Chat with AI personas inspired by the recorded teachings of history's greatest sages. <span className="text-slate-400 text-sm">(AI interpretations — not the historical figures themselves.)</span></p>
-      </div>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 max-w-5xl mx-auto">
-        {masters.map((m, i) => (
-          <button key={m.id} onClick={() => openMaster(m)} className="group relative rounded-2xl overflow-hidden border border-white/10 bg-white/[0.03] backdrop-blur p-4 hover:border-white/25 transition">
-            <div className={`w-14 h-14 mx-auto rounded-full bg-gradient-to-br ${gradients[i % gradients.length]} flex items-center justify-center text-white font-[Cormorant_Garamond,serif] text-2xl shadow-lg`}>{m.name[0]}</div>
-            <div className="text-white font-semibold mt-3 text-center">{m.name}</div>
-            <div className="text-slate-400 text-xs text-center mt-0.5">{m.tradition}</div>
-            <div className="text-purple-300 text-xs text-center mt-2 opacity-0 group-hover:opacity-100 transition">Begin a dialogue →</div>
-          </button>
-        ))}
-      </div>
-
-      <Dialog open={!!active} onOpenChange={(o) => !o && setActive(null)}>
-        <DialogContent className="max-w-2xl bg-[#0f0722] border-white/10 text-slate-100">
-          <DialogHeader>
-            <DialogTitle className="font-[Cormorant_Garamond,serif] text-3xl text-white">In dialogue with {active?.name}</DialogTitle>
-            <div className="text-xs text-slate-400">{active?.tradition} · AI interpretation</div>
-          </DialogHeader>
-          <div className="h-[50vh] overflow-y-auto space-y-3 pr-2">
-            {messages.length === 0 && (
-              <div className="text-center text-slate-400 italic py-10">Ask anything. Suffering, love, purpose, doubt.</div>
-            )}
-            {messages.map((m, i) => (
-              <div key={i} className={`p-3 rounded-xl ${m.role === 'user' ? 'bg-purple-500/15 border border-purple-400/20 ml-8' : 'bg-white/[0.04] border border-white/10 mr-8'}`}>
-                <div className="text-[10px] uppercase tracking-widest text-slate-400 mb-1">{m.role === 'user' ? 'You' : active?.name}</div>
-                <div className="whitespace-pre-line leading-relaxed">{m.content}</div>
-              </div>
-            ))}
-            {loading && <div className="text-slate-400 text-sm italic"><Loader2 size={14} className="inline animate-spin mr-2"/>The master reflects…</div>}
-          </div>
-          <div className="flex gap-2 pt-2">
-            <Input value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && send()} placeholder="Speak from your heart…" className="bg-white/[0.04] border-white/10"/>
-            <Button onClick={send} disabled={loading} className="bg-gradient-to-r from-amber-500 to-fuchsia-500"><Send size={14}/></Button>
-          </div>
-        </DialogContent>
-      </Dialog>
-    </div>
-  );
-}
-
-// -------------------- Compare Religions --------------------
-function ComparePanel() {
-  const [data, setData] = useState(null);
-  useEffect(() => { fetch('/api/compare').then((r) => r.json()).then(setData); }, []);
-  if (!data) return null;
-  const religions = ['Hinduism', 'Buddhism', 'Christianity', 'Islam', 'Judaism', 'Sikhism'];
-  return (
-    <div id="compare" className="max-w-6xl mx-auto">
-      <div className="text-center mb-8">
-        <Badge className="bg-emerald-500/20 border-emerald-300/30 text-emerald-100 uppercase tracking-[0.25em] text-[10px]">Compare Traditions</Badge>
-        <h2 className="font-[Cormorant_Garamond,serif] text-4xl md:text-5xl mt-4 text-white">Six traditions. One human longing.</h2>
-        <p className="text-slate-300/80 mt-3">Side by side, without bias.</p>
-      </div>
-      <Tabs defaultValue={data.topics[0]} className="w-full">
-        <TabsList className="bg-white/[0.03] border border-white/10 flex flex-wrap h-auto">
-          {data.topics.map((t) => (
-            <TabsTrigger key={t} value={t} className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500/60 data-[state=active]:to-fuchsia-500/60">{t}</TabsTrigger>
-          ))}
-        </TabsList>
-        {data.topics.map((t) => (
-          <TabsContent key={t} value={t} className="mt-6">
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
-              {religions.map((r) => (
-                <Card key={r} className="bg-white/[0.03] border-white/10">
-                  <CardContent className="p-5">
-                    <div className="text-purple-300 uppercase text-xs tracking-widest mb-2">{r}</div>
-                    <div className="text-slate-200 leading-relaxed">{data.table[t]?.[r]}</div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </TabsContent>
-        ))}
-      </Tabs>
-    </div>
-  );
-}
-
-// -------------------- Why This Matters --------------------
-const WHY_ICONS = { Brain, BookOpen, Network, Infinity: InfinityIcon };
-function WhyMattersSection() {
-  const [cards, setCards] = useState([]);
-  const [openIdx, setOpenIdx] = useState(null);
-  useEffect(() => { fetch('/api/why').then(r => r.json()).then(d => setCards(d.cards || [])); }, []);
-  return (
-    <section id="why" className="py-24 px-6 relative bg-black/30">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center max-w-3xl mx-auto mb-14">
-          <Badge className="bg-amber-500/20 border-amber-300/30 text-amber-100 uppercase tracking-[0.25em] text-[10px]">Why this matters</Badge>
-          <h2 className="font-[Cormorant_Garamond,serif] text-4xl md:text-6xl mt-4 text-white">Why should you actually care?</h2>
-          <p className="text-slate-300/80 mt-4 text-lg">Not because tradition says so. Because meditation, wisdom, interconnection, and Sanatana Dharma each answer a specific human need — with both scientific evidence and lived experience.</p>
-        </div>
-        <div className="grid md:grid-cols-2 gap-5">
-          {cards.map((c, i) => {
-            const Icon = WHY_ICONS[c.icon] || Sparkles;
-            const open = openIdx === i;
-            return (
-              <Card key={c.id} className="bg-white/[0.03] border-white/10 backdrop-blur relative overflow-hidden">
-                <div className={`absolute -top-20 -right-20 w-56 h-56 rounded-full bg-gradient-to-br ${c.color} opacity-20 blur-3xl`}/>
-                <CardContent className="p-6 relative">
-                  <div className="flex items-start gap-4">
-                    <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${c.color} flex items-center justify-center shrink-0`}><Icon size={22} className="text-white"/></div>
-                    <div className="flex-1">
-                      <h3 className="font-[Cormorant_Garamond,serif] text-3xl text-white">{c.title}</h3>
-                      <div className="text-purple-300 text-sm mt-1">{c.tagline}</div>
-                    </div>
-                  </div>
-                  <div className="mt-4 space-y-4">
-                    <div><div className="text-cyan-300 text-xs uppercase tracking-widest mb-1">Scientific</div><p className="text-slate-200 leading-relaxed">{c.scientific}</p></div>
-                    {open && <div><div className="text-fuchsia-300 text-xs uppercase tracking-widest mb-1">Spiritual</div><p className="text-slate-200 leading-relaxed">{c.spiritual}</p></div>}
-                    {open && <div><div className="text-amber-300 text-xs uppercase tracking-widest mb-2">Benefits</div><ul className="space-y-1">{c.benefits?.map((b, j) => (<li key={j} className="flex gap-2 text-slate-200"><span className="text-amber-300">•</span>{b}</li>))}</ul></div>}
-                  </div>
-                  <button onClick={() => setOpenIdx(open ? null : i)} className="mt-4 text-purple-300 hover:text-white text-sm">{open ? '— Show less' : '+ Show more'}</button>
-                </CardContent>
-              </Card>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// -------------------- Explore Grid --------------------
-const PAGE_LINKS = [
-  { href: '/awakening', title: 'Awakening', devanagari: '\u091C\u093E\u0917\u0930\u0923', desc: 'Complete practices to open the 7 chakras + Vedic body-cosmos correspondences.', color: 'from-fuchsia-500 to-purple-600', Icon: Sparkles },
-  { href: '/explore/vedas', title: 'The Vedic Tree', devanagari: '\u0935\u0947\u0926\u0935\u0943\u0915\u094D\u0937', desc: '4 Vedas, 108 Upanishads, 6 philosophies \u2014 the living library.', color: 'from-amber-400 to-orange-600', Icon: BookOpen },
-  { href: '/explore/ashramas', title: 'Four Life Stages', devanagari: '\u091A\u0924\u0941\u0930\u093E\u0936\u094D\u0930\u092E', desc: 'Brahmacharya, Grihastha, Vanaprastha, Sannyasa \u2014 the 100-year map.', color: 'from-amber-400 to-fuchsia-500', Icon: Compass },
-  { href: '/explore/purusharthas', title: 'Four Aims of Life', devanagari: '\u092A\u0941\u0930\u0941\u0937\u093E\u0930\u094D\u0925', desc: 'Dharma, Artha, Kama, Moksha \u2014 the complete map.', color: 'from-amber-400 to-purple-600', Icon: Compass },
-  { href: '/explore/varnas', title: 'The Four Orders', devanagari: '\u091A\u093E\u0924\u0941\u0930\u094D\u0935\u0930\u094D\u0923\u094D\u092F', desc: 'Brahmana, Kshatriya, Vaishya, Shudra \u2014 based on qualities.', color: 'from-amber-400 to-cyan-500', Icon: Users },
-  { href: '/explore/samskaras', title: 'Sixteen Sacraments', devanagari: '\u0937\u094B\u0921\u0936 \u0938\u0902\u0938\u094D\u0915\u093E\u0930', desc: 'From conception to cremation \u2014 the sixteen life rites.', color: 'from-cyan-400 to-fuchsia-500', Icon: Flame },
-  { href: '/explore/rituals', title: 'Rituals of Pooja', devanagari: '\u092A\u0942\u091C\u093E \u0935\u093F\u0927\u093E\u0928', desc: '16 upacharas, 12 major poojas, aartis, homas, implements.', color: 'from-orange-500 to-red-600', Icon: Flame },
-  { href: '/explore/gods', title: 'The Gods', devanagari: '\u0926\u0947\u0935\u0917\u0923', desc: 'Shiva, Vishnu, Devi \u2014 decorations, weapons, body connections.', color: 'from-amber-400 to-fuchsia-500', Icon: Sparkles },
-  { href: '/explore/avatars', title: 'The Avatars', devanagari: '\u0905\u0935\u0924\u093E\u0930', desc: 'Ten of Vishnu, seven of Shiva, seven of Devi.', color: 'from-cyan-400 to-purple-600', Icon: InfinityIcon },
-  { href: '/explore/aghoris', title: 'The Aghoris', devanagari: '\u0905\u0918\u094B\u0930', desc: 'Cremation-ground mystics who see no impurity.', color: 'from-slate-500 to-purple-800', Icon: Flame },
-  { href: '/explore/sadhus', title: 'Sadhus & Ascetics', devanagari: '\u0938\u093E\u0927\u0941', desc: 'Nine great orders of Hindu renunciation.', color: 'from-orange-400 to-red-600', Icon: Users },
-  { href: '/explore/nakshatras', title: '27 Nakshatras', devanagari: '\u0928\u0915\u094D\u0937\u0924\u094D\u0930', desc: 'Lunar mansions \u2014 the sky as a cognitive map.', color: 'from-indigo-400 to-purple-500', Icon: Sparkles },
-  { href: '/explore/koshas', title: 'The Five Koshas', devanagari: '\u092A\u0902\u091A \u0915\u094B\u0936', desc: 'Food, breath, mind, wisdom, bliss \u2014 the five sheaths.', color: 'from-cyan-400 to-blue-500', Icon: Heart },
-  { href: '/explore/mythology', title: 'Mythology', devanagari: '\u092A\u0941\u0930\u093E\u0923', desc: 'Gods, ten avatars, and the two epics.', color: 'from-fuchsia-400 to-purple-500', Icon: Users },
-  { href: '/explore/life-mysteries', title: 'Life Mysteries', devanagari: '\u091C\u0940\u0935\u0928 \u0930\u0939\u0938\u094D\u092F', desc: 'Karma, rebirth, 84 lakh yonis, yugas, moksha.', color: 'from-violet-500 to-purple-700', Icon: InfinityIcon },
-  { href: '/explore/festivals', title: 'Festivals & Routes', devanagari: '\u0909\u0924\u094D\u0938\u0935', desc: '10 major festivals and 5 pilgrimage circuits.', color: 'from-amber-500 to-red-500', Icon: Flame },
-  { href: '/explore/lost-civilizations', title: 'Lost & Archived', devanagari: '\u0932\u0941\u092A\u094D\u0924 \u0938\u092D\u094D\u092F\u0924\u093E', desc: 'Vanished civilizations and destroyed sanctuaries.', color: 'from-slate-400 to-purple-500', Icon: Sparkles },
-  { href: '/explore/shop', title: 'Sacred Store', devanagari: '\u0926\u0941\u0915\u093E\u0928', desc: 'Mala, puja kits, homa supplies, meditation tools.', color: 'from-emerald-400 to-teal-500', Icon: Sun },
-  { href: '/questions', title: 'Life Questions', devanagari: '\u091C\u0940\u0935\u0928 \u092A\u094D\u0930\u0936\u094D\u0928', desc: '25 deep questions with pre-written 4-perspective answers.', color: 'from-violet-400 to-purple-600', Icon: Compass },
-  { href: '/coach', title: 'AI Life Coach', devanagari: '\u092E\u093E\u0930\u094D\u0917\u0926\u0930\u094D\u0936\u0915', desc: '8 domains: career, stress, relationships, purpose.', color: 'from-purple-500 to-fuchsia-600', Icon: Sparkles },
-  { href: '/practices', title: 'Sacred Practices', devanagari: '\u0938\u093E\u0927\u0928\u093E', desc: 'Mala, Deeksha, and the 16-step daily puja.', color: 'from-amber-400 to-orange-600', Icon: Flame },
-  { href: '/yajna', title: 'Yajna & Homa', devanagari: '\u092F\u091C\u094D\u091E \u00B7 \u0939\u094B\u092E', desc: 'The fire ritual \u2014 offering as ancient science.', color: 'from-orange-400 to-red-600', Icon: Flame },
-  { href: '/knowledge', title: 'Ancient Knowledge', devanagari: '\u092A\u094D\u0930\u093E\u091A\u0940\u0928 \u091C\u094D\u091E\u093E\u0928', desc: 'Ayurveda, Yoga, Vastu, Sanskrit, Sacred Geometry.', color: 'from-emerald-400 to-teal-600', Icon: InfinityIcon },
-  { href: '/paths', title: 'Learning Paths', devanagari: '\u092E\u093E\u0930\u094D\u0917', desc: 'Beginner \u2192 Intermediate \u2192 Advanced.', color: 'from-teal-400 to-cyan-600', Icon: ArrowRight },
-  { href: '/daily', title: 'Daily Rhythm', devanagari: '\u0926\u093F\u0928\u091A\u0930\u094D\u092F\u093E', desc: 'The morning-to-night practice.', color: 'from-yellow-400 to-amber-600', Icon: Sun },
-  { href: '/challenges', title: 'Daily Challenges', devanagari: '\u0938\u093E\u0927\u0928\u093E', desc: '7 / 21 / 30 / 40 day guided programs.', color: 'from-fuchsia-500 to-pink-600', Icon: Flame },
-  { href: '/meditate', title: 'Meditation Center', devanagari: '\u0927\u094D\u092F\u093E\u0928', desc: '12 practices with AI-guided scripts.', color: 'from-cyan-400 to-blue-600', Icon: Circle },
-  { href: '/map', title: 'World Sacred Sites', devanagari: '\u092E\u0928\u094D\u0926\u093F\u0930', desc: '65+ sites across 6 continents.', color: 'from-teal-400 to-cyan-600', Icon: Globe2 },
-  { href: '/universe', title: 'Universe Explorer', devanagari: '\u092C\u094D\u0930\u0939\u094D\u092E\u093E\u0923\u094D\u0921', desc: 'From Planck length to the observable universe.', color: 'from-indigo-400 to-purple-600', Icon: Sparkles },
-  { href: '/timeline', title: 'Cosmic Timeline', devanagari: '\u0915\u093E\u0932\u091A\u0915\u094D\u0930', desc: 'Big Bang to now \u2014 science + wisdom side by side.', color: 'from-purple-400 to-fuchsia-600', Icon: Sparkles },
-  { href: '/books', title: 'Sacred Books', devanagari: '\u0917\u094D\u0930\u0928\u094D\u0925', desc: '15 books across all traditions.', color: 'from-amber-300 to-yellow-600', Icon: BookOpen },
-  { href: '/music', title: 'Sacred Music', devanagari: '\u0928\u093E\u0926', desc: 'Mantras, chants, bowls, binaural.', color: 'from-orange-400 to-red-500', Icon: Play },
-  { href: '/journal', title: 'Spiritual Journal', devanagari: '\u0938\u094D\u0935\u093E\u0927\u094D\u092F\u093E\u092F', desc: 'Daily entries with streak tracking.', color: 'from-pink-400 to-rose-600', Icon: Heart },
-  { href: '/community', title: 'Sangha', devanagari: '\u0938\u0902\u0918', desc: 'A community of seekers.', color: 'from-cyan-400 to-blue-500', Icon: Users },
-  { href: '/connected', title: 'Everything Connected', devanagari: '\u0938\u092E\u094D\u092C\u0928\u094D\u0927', desc: 'Type any concept. Follow the thread.', color: 'from-fuchsia-400 to-pink-600', Icon: Network },
-  { href: '/body', title: 'Body + Spirit', devanagari: '\u0936\u0930\u0940\u0930', desc: 'Where chakras meet the nervous system.', color: 'from-emerald-400 to-teal-600', Icon: Brain },
-  { href: '/mysteries', title: 'World Mysteries', devanagari: '\u0930\u0939\u0938\u094D\u092F', desc: 'Six unresolved questions, honestly framed.', color: 'from-violet-500 to-purple-700', Icon: Sparkles },
-  { href: '/test', title: 'Chakra Balance Test', devanagari: '\u091A\u0915\u094D\u0930 \u092A\u0930\u0940\u0915\u094D\u0937\u093E', desc: 'Seven-question self-assessment.', color: 'from-violet-400 to-purple-600', Icon: Atom },
-];
-
-function ExploreSection() {
-  return (
-    <section className="py-24 px-6 relative">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-12">
-          <Badge className="bg-purple-500/20 border-purple-300/30 text-purple-100 uppercase tracking-[0.25em] text-[10px]">Explore Chaitava</Badge>
-          <div className="font-devanagari text-2xl text-purple-300 mt-4">एकोनचत्वारिंशत् द्वार</div>
-          <h2 className="font-[Cormorant_Garamond,serif] text-4xl md:text-6xl mt-3 text-white">Thirty-nine doorways.</h2>
-          <p className="text-slate-400 mt-3">Choose one. Return tomorrow. The doorway will have deepened.</p>
-        </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {PAGE_LINKS.map((l) => {
-            const Icon = l.Icon;
-            return (
-              <Link key={l.href} href={l.href} className="group rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur p-6 hover:border-white/25 hover:-translate-y-1 transition relative overflow-hidden">
-                <div className={`absolute -top-16 -right-16 w-40 h-40 rounded-full bg-gradient-to-br ${l.color} opacity-25 blur-2xl group-hover:opacity-45 transition`}/>
-                <div className="relative">
-                  <div className={`w-11 h-11 rounded-xl bg-gradient-to-br ${l.color} flex items-center justify-center`}><Icon size={20} className="text-white"/></div>
-                  {l.devanagari && <div className="font-devanagari text-slate-400 text-sm mt-4">{l.devanagari}</div>}
-                  <h3 className="font-[Cormorant_Garamond,serif] text-2xl text-white mt-1">{l.title}</h3>
-                  <p className="text-slate-300 text-sm mt-2 leading-relaxed">{l.desc}</p>
-                  <div className="mt-3 text-purple-300 text-sm flex items-center gap-1">Open <ArrowRight size={12} className="group-hover:translate-x-1 transition"/></div>
-                </div>
-              </Link>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// -------------------- Page --------------------
-function App() {
-  const [daily, setDaily] = useState(null);
-  useEffect(() => { fetch('/api/daily').then((r) => r.json()).then(setDaily); }, []);
-
-  return (
-    <div className="relative min-h-screen overflow-x-hidden">
-      {/* ambient background */}
-      <div className="fixed inset-0 -z-10">
-        <div className="absolute inset-0 bg-[#0a0416]"/>
-        <div className="absolute inset-0 opacity-40" style={{ backgroundImage: `url(${COSMOS_BG})`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
-        <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at top, rgba(88,28,135,0.55), transparent 60%), radial-gradient(ellipse at bottom, rgba(190,24,93,0.25), transparent 60%)' }} />
-      </div>
-
-      {/* Nav */}
-      <SiteNav />
+    <div className="min-h-screen relative">
+      <CosmicBg/>
+      <SiteNav/>
 
       {/* HERO */}
-      <section className="relative pt-24 pb-16 px-6">
-        <div className="max-w-6xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/5 text-xs uppercase tracking-[0.3em] text-purple-200">
-            <Sun size={12}/> Where science meets spirituality
+      <section className="relative min-h-screen flex flex-col items-center justify-center px-6 pt-24 pb-16">
+        {/* subtle orb */}
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[520px] h-[520px] rounded-full opacity-40 blur-3xl pointer-events-none" style={{
+          background: 'radial-gradient(circle, rgba(212,175,55,0.25), transparent 60%)'
+        }}/>
+
+        <div className="relative w-full max-w-3xl text-center animate-fadeUp">
+          {/* Logo mark */}
+          <div className="flex justify-center mb-8">
+            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#D4AF37] via-fuchsia-400 to-purple-500 flex items-center justify-center shadow-2xl shadow-amber-500/20 relative">
+              <div className="absolute inset-0 rounded-full animate-pulse bg-gradient-to-br from-[#D4AF37]/40 to-transparent blur-md"/>
+              <span className="font-serif text-3xl text-black relative">ॐ</span>
+            </div>
           </div>
-          <div className="font-devanagari text-2xl md:text-3xl text-purple-200/70 mt-8">चैतव · चैतन्यं ब्रह्म</div>
-          <h1 className="font-[Cormorant_Garamond,serif] text-5xl md:text-7xl lg:text-8xl mt-4 leading-[1.05] text-white">
-            Ancient wisdom.<br/><span className="bg-gradient-to-r from-amber-200 via-fuchsia-300 to-purple-300 bg-clip-text text-transparent">Modern science.</span><br/>Every human question.
+
+          {/* Tiny label */}
+          <div className="text-[10px] uppercase tracking-[0.4em] text-gold mb-4 font-medium">Chaitava · चैतव</div>
+
+          {/* Main headline */}
+          <h1 className="font-serif text-6xl md:text-8xl text-white leading-[0.95] text-balance">
+            Everything is<br/>
+            <span className="italic bg-gradient-to-r from-amber-200 via-[#D4AF37] to-amber-100 bg-clip-text text-transparent">Connected</span>.
           </h1>
-          <p className="mt-6 text-lg md:text-xl text-slate-300/90 max-w-2xl mx-auto">Who am I? Why do I suffer? What is consciousness? Get four honest perspectives on the questions that matter most.</p>
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <Link href="/discover"><Button size="lg" className="bg-gradient-to-r from-amber-400 via-fuchsia-500 to-purple-500 shadow-2xl shadow-fuchsia-500/25 text-white"><Compass size={16} className="mr-2"/>Enter the Knowledge Universe</Button></Link>
-            <a href="#guru"><Button size="lg" variant="outline" className="border-white/15 bg-white/5 hover:bg-white/10 text-white"><Sparkles size={16} className="mr-2"/>Ask the AI Guru</Button></a>
-            <a href="#masters"><Button size="lg" variant="outline" className="border-white/15 bg-white/5 hover:bg-white/10 text-white">Meet the Masters</Button></a>
-          </div>
-        </div>
 
-        {/* Daily row */}
-        <div className="max-w-6xl mx-auto mt-16 grid md:grid-cols-3 gap-4">
-          <Card className="md:col-span-2 bg-white/[0.03] backdrop-blur border-white/10 relative overflow-hidden">
-            <div className="absolute inset-0 opacity-30" style={{ backgroundImage: `url(${SACRED_GEO})`, backgroundSize: 'cover', backgroundPosition: 'center' }}/>
-            <div className="absolute inset-0 bg-gradient-to-r from-[#0a0416]/95 to-[#0a0416]/40"/>
-            <CardContent className="p-8 relative">
-              <div className="flex items-center gap-2 text-amber-200/80 text-xs uppercase tracking-[0.25em] mb-4"><Sun size={14}/> Today's thought</div>
-              {daily ? (
-                <>
-                  <p className="font-[Cormorant_Garamond,serif] text-2xl md:text-3xl text-white leading-snug">“{daily.quote.text}”</p>
-                  <p className="mt-3 text-slate-400 text-sm">— {daily.quote.source}</p>
-                </>
-              ) : (
-                <div className="h-24 bg-white/5 rounded animate-pulse"/>
-              )}
-            </CardContent>
-          </Card>
-          <MeditationTimer/>
-        </div>
-      </section>
+          <p className="mt-8 text-lg md:text-xl text-slate-300 max-w-xl mx-auto text-balance leading-relaxed">
+            An AI Universe of Consciousness where Science meets Spirit.
+          </p>
 
-      {/* GURU */}
-      <section className="py-20 px-6 relative">
-        <div className="max-w-7xl mx-auto"><GuruPanel/></div>
-      </section>
-
-      {/* WHY THIS MATTERS */}
-      <WhyMattersSection />
-
-      {/* EXPLORE GRID */}
-      <ExploreSection />
-
-      {/* MASTERS */}
-      <section className="py-20 px-6 relative bg-black/20">
-        <div className="max-w-7xl mx-auto"><MastersPanel/></div>
-      </section>
-
-      {/* TEMPLE */}
-      <section id="temple" className="py-20 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-10">
-            <Badge className="bg-cyan-500/20 border-cyan-300/30 text-cyan-100 uppercase tracking-[0.25em] text-[10px]">Featured Temple</Badge>
-            <h2 className="font-[Cormorant_Garamond,serif] text-4xl md:text-5xl mt-4 text-white">History, architecture, mystery — and science.</h2>
-          </div>
-          {daily?.temple && (
-            <Card className="bg-white/[0.03] border-white/10 overflow-hidden">
-              <div className="grid md:grid-cols-2">
-                <div className="relative h-64 md:h-full min-h-[300px]" style={{ backgroundImage: `url(${daily.temple.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
-                  <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-[#0a0416]/60 to-transparent"/>
+          {/* Big search */}
+          <form onSubmit={submit} className="mt-14 max-w-2xl mx-auto">
+            <div className="text-slate-400 text-sm mb-4 font-medium">What would you like to understand today?</div>
+            <div className="relative group">
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#D4AF37]/20 via-fuchsia-500/20 to-purple-500/20 blur-xl opacity-60 group-focus-within:opacity-100 transition"/>
+              <div className="relative glass-strong rounded-2xl overflow-hidden">
+                <div className="flex items-center px-5 py-4 gap-3">
+                  <Search size={20} className="text-slate-400 shrink-0"/>
+                  <input
+                    ref={inputRef}
+                    value={q}
+                    onChange={e => setQ(e.target.value)}
+                    placeholder={SUGGESTIONS[placeholderIdx]}
+                    className="flex-1 bg-transparent outline-none text-white placeholder:text-slate-500 text-base md:text-lg"/>
+                  <button type="submit" disabled={!q.trim()}
+                    className={`shrink-0 h-10 w-10 rounded-xl flex items-center justify-center transition ${q.trim() ? 'bg-[#D4AF37] text-black hover:bg-amber-300' : 'bg-white/5 text-slate-500'}`}>
+                    <ArrowRight size={18}/>
+                  </button>
                 </div>
-                <CardContent className="p-8">
-                  <div className="text-purple-300 uppercase tracking-widest text-xs">{daily.temple.era}</div>
-                  <h3 className="font-[Cormorant_Garamond,serif] text-4xl mt-2 text-white">{daily.temple.name}</h3>
-                  <div className="text-slate-400 text-sm">{daily.temple.location} · Deity: {daily.temple.deity}</div>
-                  <div className="space-y-3 mt-5 text-slate-200/90">
-                    <div><span className="text-amber-300 text-xs uppercase tracking-widest">History</span><p className="mt-1">{daily.temple.history}</p></div>
-                    <div><span className="text-fuchsia-300 text-xs uppercase tracking-widest">Architecture</span><p className="mt-1">{daily.temple.architecture}</p></div>
-                    <div><span className="text-purple-300 text-xs uppercase tracking-widest">Mystery</span><p className="mt-1">{daily.temple.mystery}</p></div>
-                    <div><span className="text-cyan-300 text-xs uppercase tracking-widest">Scientific Note</span><p className="mt-1">{daily.temple.science}</p></div>
-                    <div className="text-xs text-slate-400">Timings: {daily.temple.timings}</div>
-                  </div>
-                </CardContent>
               </div>
-            </Card>
-          )}
+            </div>
+
+            {/* Suggested */}
+            <div className="mt-4 flex flex-wrap justify-center gap-2">
+              {SUGGESTIONS.slice(0, 4).map(s => (
+                <button key={s} type="button" onClick={() => { setQ(s); setTimeout(() => inputRef.current?.focus(), 0); }}
+                  className="text-xs text-slate-400 hover:text-white bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.06] px-3 py-1.5 rounded-full transition">
+                  {s}
+                </button>
+              ))}
+            </div>
+          </form>
+
+          {/* 3 CTAs — nothing more */}
+          <div className="mt-20 grid sm:grid-cols-3 gap-3 max-w-3xl mx-auto">
+            <CTA href="/journey" icon={User} title="Continue Journey" sub="Your practice awaits"/>
+            <CTA href="/journey#reflection" icon={BookOpen} title="Today's Reflection" sub="A moment to pause"/>
+            <CTA href="/discover" icon={Compass} title="Explore Universe" sub="Travel through ideas" primary/>
+          </div>
+        </div>
+
+        {/* Tiny footer */}
+        <div className="absolute bottom-6 left-0 right-0 text-center text-[10px] uppercase tracking-[0.3em] text-slate-600">
+          Science · Spirit · Philosophy · Consciousness
         </div>
       </section>
-
-      {/* COMPARE */}
-      <section className="py-20 px-6 bg-black/20">
-        <div className="max-w-7xl mx-auto"><ComparePanel/></div>
-      </section>
-
-      {/* Footer */}
-      <footer className="py-10 px-6 border-t border-white/5 text-center text-slate-500 text-sm">
-          <div className="font-[Cormorant_Garamond,serif] text-2xl tracking-wide text-white/70 mb-2">Chaitava</div>
-        <div className="text-slate-500 text-xs mb-2 italic">चैतव · The awakened consciousness</div>
-        <div>Balanced perspectives on the questions that matter most. AI-assisted, human-curated.</div>
-      </footer>
     </div>
+  );
+}
+
+function CTA({ href, icon: Icon, title, sub, primary }) {
+  return (
+    <Link href={href}
+      className={`group relative p-5 rounded-2xl text-left transition-all duration-300 hover:-translate-y-0.5 ${primary
+        ? 'bg-gradient-to-br from-[#D4AF37]/15 via-fuchsia-500/10 to-purple-500/10 border border-[#D4AF37]/40 hover:border-[#D4AF37]/70'
+        : 'glass hover:bg-white/[0.05]'}`}>
+      <div className="flex items-center gap-3">
+        <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${primary ? 'bg-[#D4AF37]/20 text-[#D4AF37]' : 'bg-white/[0.06] text-slate-300 group-hover:text-white'}`}>
+          <Icon size={16}/>
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="text-white text-sm font-medium">{title}</div>
+          <div className="text-slate-500 text-xs mt-0.5 truncate">{sub}</div>
+        </div>
+        <ArrowRight size={14} className={`shrink-0 transition ${primary ? 'text-[#D4AF37]' : 'text-slate-600 group-hover:text-white'}`}/>
+      </div>
+    </Link>
   );
 }
 

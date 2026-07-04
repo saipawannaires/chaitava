@@ -167,3 +167,14 @@ agent_communication:
       2) AI-generated node expansion: new POST /api/expand-node — user types any concept (e.g. "forgiveness", "moon", "silence"), Claude generates a full 5-perspective node (id, name, dev, tagline, domain, color, scientific, spiritual, philosophical, historical, practice, related[]) added live to the universe. Verified working.
       3) UI/UX polish on /discover: search bar with ⌘K shortcut, smooth transitions between planets, breadcrumb trail showing full journey, back/home buttons, star field background, orbit-in animations, glow on center planet, hover scale on orbit planets, mobile-responsive.
       4) System prompt aligned throughout.
+
+  - agent: "main"
+    message: |
+      PREMIUM REDESIGN — Apple/Notion/Linear-quality 4-tab experience per user's design brief:
+      1) New palette: bg #050816, gold accent #D4AF37, secondary #94A3B8, glass cards. Inter font throughout, Cormorant Garamond serif for headlines. New globals.css.
+      2) 4-tab pill nav ONLY: Home / Universe / AI / Journey. Groups all 40+ prior pages under those 4 sections.
+      3) New /page.js — calm hero: Om logo → "Everything is *Connected*." serif+gold-italic → search box (rotating placeholders) → chip suggestions → ONLY 3 CTAs (Continue Journey, Today's Reflection, Explore Universe — Universe gold-primary).
+      4) New /ai — unified AI hub. "Ask *anything*." Single search bar, 9 starter chips, on-submit routes to /api/guru with 8-section format.
+      5) New /journey — personal growth hub. Progress ring with gold-fuchsia gradient stroke, day streak, Today's Reflection textarea (localStorage), habit tracker (5 habits with tap-to-progress + gradient fill bars), 6 deeper practice cards.
+      6) New /components/cosmic-bg.jsx — canvas star field with drift + twinkle animations.
+      All 4 tabs verified via screenshots.
